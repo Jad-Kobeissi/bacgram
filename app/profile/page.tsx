@@ -12,11 +12,12 @@ import Post from "../Post";
 export default function Home() {
   const { user } = useContext(UserContext)!;
   const [posts, setPosts] = useState<TPost[]>([]);
+  const [page, setPage] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const fetchPosts = async () => {
     axios
-      .get("/api/posts", {
+      .get(`/api/posts/user?page=${page}`, {
         headers: {
           Authorization: `Bearer ${getCookie("token")}`,
         },
@@ -24,6 +25,7 @@ export default function Home() {
       .then((res) => {
         setPosts([...posts, ...res.data]);
         localStorage.setItem("posts", JSON.stringify([...posts, ...res.data]));
+        setPage((prev) => prev + 1);
       })
       .catch((err) => {
         setError(err.response.data);
@@ -31,17 +33,12 @@ export default function Home() {
       });
   };
   useEffect(() => {
-    if (localStorage.getItem("posts")) {
-      setPosts(JSON.parse(localStorage.getItem("posts") as string));
-    }
-  }, []);
-  useEffect(() => {
     fetchPosts();
   }, []);
   return (
     <>
       <h1 className="capitalize text-[2.5rem] font-bold text-center my-[20vh]">
-        Welcome {user?.username}!
+        Hello {user?.username}!
       </h1>
 
       <InfiniteScroll
@@ -53,7 +50,7 @@ export default function Home() {
         className="flex flex-col items-center justify-center gap-[20vh]"
       >
         {posts.map((post) => (
-          <Post post={post} key={post.id as number} />
+          <Post key={post.id as number} post={post} />
         ))}
       </InfiniteScroll>
       {error && <Error className="text-center">{error}</Error>}

@@ -36,6 +36,7 @@ export default function Login() {
               password: password.current?.value,
             })
             .then((res) => {
+              localStorage.clear();
               setUser(res.data.user);
               setCookie("token", res.data.token);
               router.push("/home");
