@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { deleteCookie } from "cookies-next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -27,7 +28,18 @@ export default function Nav() {
           <Link href={"/profile"}>Profile</Link>
           <span className="w-0 h-0.5 bg-[#d9d9d9] left-0 bottom-0 absolute group-hover:w-full transition-all duration-200 group-active:w-full"></span>
         </div>
-        <button className="w-fit h-fit">LogOut</button>
+        <div className="relative group">
+          <button
+            className="w-fit h-fit"
+            onClick={() => {
+              deleteCookie("token");
+              router.push("/");
+            }}
+          >
+            LogOut
+          </button>
+          <span className="w-0 h-0.5 bg-[#d9d9d9] left-0 bottom-0 absolute group-hover:w-full transition-all duration-200 group-active:w-full"></span>
+        </div>
       </div>
     </nav>
   );

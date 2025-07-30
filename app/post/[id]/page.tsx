@@ -39,6 +39,11 @@ export default function PostPage({
     <>
       <Nav />
       {loading && <Loading className="w-screen h-screen" />}
+      {error && (
+        <Error className="w-screen h-screen flex items-center justify-center">
+          {error}
+        </Error>
+      )}
       {post != null && (
         <div className="flex items-center justify-center flex-col h-screen gap-[2vh]">
           <h1 className="text-[1.5rem]">Username: {post.author.username}</h1>
