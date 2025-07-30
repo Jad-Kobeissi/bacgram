@@ -1,6 +1,7 @@
 import { decode, verify } from "jsonwebtoken";
-import { prisma } from "../prisma";
+import { prisma, storage } from "../init";
 import { isEmpty } from "../isEmpty";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export async function GET(req: Request) {
   try {
@@ -57,18 +58,32 @@ export async function POST(req: Request) {
     if (!authHeader || !verify(authHeader, process.env.SECRET as string))
       return new Response("Unauthorized", { status: 401 });
 
-    const { title, content } = await req.json();
+    const formData = await req.formData();
+
+    const title = formData.get("title")?.toString();
+    const content = formData.get("content")?.toString();
+    const image = formData.get("image") as File | null;
 
     if (!title || !content || isEmpty([title, content]))
       return new Response("ALl fields are required", { status: 400 });
 
     const decoded: any = await decode(authHeader);
 
+    let imageUrl: string | null = null;
+    if (image) {
+      const storageRef = ref(
+        storage,
+        `${process.env.imageBucket}/${image.name}`
+      );
+      await uploadBytes(storageRef, image);
+      imageUrl = await getDownloadURL(storageRef);
+    }
     const post = await prisma.post.create({
       data: {
         title,
         content,
         authorId: decoded.id,
+        image: imageUrl != null ? imageUrl : undefined,
       },
     });
 

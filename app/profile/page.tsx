@@ -9,8 +9,9 @@ import { getCookie } from "cookies-next";
 import Loading from "../Loading";
 import Post from "../Post";
 import Nav from "../Nav";
+import Image from "next/image";
 
-export default function Home() {
+export default function Profile() {
   const { user } = useContext(UserContext)!;
   const [posts, setPosts] = useState<TPost[]>([]);
   const [page, setPage] = useState(1);
@@ -38,8 +39,14 @@ export default function Home() {
   return (
     <>
       <Nav />
-      <h1 className="capitalize text-[2.5rem] font-bold text-center my-[20vh]">
-        Hello {user?.username}!
+      <h1 className="capitalize text-[2.5rem] font-bold text-center my-[20vh] flex items-center justify-center gap-4">
+        Hello{" "}
+        <img
+          src={user?.profilePicture as string}
+          alt="User profile picture"
+          className="md:w-[5vw] md:h-[5vw] h-[10vw] w-[10vw] rounded-full"
+        />{" "}
+        {user?.username}!
       </h1>
 
       <InfiniteScroll

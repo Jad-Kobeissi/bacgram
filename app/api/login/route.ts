@@ -1,6 +1,6 @@
 import { compare } from "bcrypt";
 import { isEmpty } from "../isEmpty";
-import { prisma } from "../prisma";
+import { prisma } from "../init";
 import { sign } from "jsonwebtoken";
 
 export async function POST(req: Request) {

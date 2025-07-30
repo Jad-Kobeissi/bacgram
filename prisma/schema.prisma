@@ -19,6 +19,7 @@ model User {
   password String 
   posts Post[] @relation("posts")
   viewedPosts Post[]
+  profilePicture String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -29,6 +30,7 @@ model Post {
   viewedUsers User[]
   title String
   content String?
+  image String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt 
 }

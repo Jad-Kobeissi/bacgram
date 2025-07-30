@@ -1,14 +1,22 @@
 import { hash } from "bcrypt";
 import { isEmpty } from "../isEmpty";
-import { prisma } from "../prisma";
+import { prisma, storage } from "../init";
 import { sign } from "jsonwebtoken";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export async function POST(req: Request) {
   try {
-    const { username, password } = await req.json();
-
-    if (!username || !password || isEmpty([username, password]))
-      return new Response("Username and Password", { status: 400 });
+    const formData = await req.formData();
+    const username = formData.get("username")?.toString();
+    const password = formData.get("password")?.toString();
+    const profilePicture = formData.get("profilePicture") as Blob;
+    if (
+      !username ||
+      !password ||
+      !profilePicture ||
+      isEmpty([username, password])
+    )
+      return new Response("Bad Request", { status: 400 });
 
     const userCheck = await prisma.user.findUnique({
       where: {
@@ -17,10 +25,17 @@ export async function POST(req: Request) {
     });
     if (userCheck) return new Response("Username Taken", { status: 409 });
 
+    const storageRef = ref(
+      storage,
+      `${process.env.profilePictureBucket}/${username}.jpg`
+    );
+    await uploadBytes(storageRef, profilePicture);
+    const downloadURL = await getDownloadURL(storageRef);
     const user = await prisma.user.create({
       data: {
         username,
         password: await hash(password, 10),
+        profilePicture: downloadURL,
       },
       include: {
         posts: true,

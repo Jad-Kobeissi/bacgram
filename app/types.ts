@@ -4,6 +4,7 @@ export interface User {
   password: String;
   posts: Post[];
   viewedPosts: Post[];
+  profilePicture: String;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -14,6 +15,7 @@ export interface Post {
   title: String;
   content: String;
   viewedUsers: User[];
+  image?: String;
   createdAt: Date;
   updatedAt: Date;
 }

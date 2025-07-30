@@ -1,5 +1,5 @@
 import { decode, verify } from "jsonwebtoken";
-import { prisma } from "../../prisma";
+import { prisma } from "../../init";
 
 export async function GET(req: Request) {
   try {
