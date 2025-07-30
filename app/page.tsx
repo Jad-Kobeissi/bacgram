@@ -3,6 +3,9 @@ import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
 import { useInView } from "react-intersection-observer";
 import Link from "next/link";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { getCookie } from "cookies-next";
 function Nav() {
   return (
     <nav className="flex items-center justify-between fixed w-screen px-[2vw] py-[2vh]">
@@ -143,6 +146,12 @@ function Contact() {
   );
 }
 export default function Main() {
+  const router = useRouter();
+  useEffect(() => {
+    if (getCookie("token")) {
+      router.push("/home");
+    }
+  }, []);
   return (
     <>
       <Nav />

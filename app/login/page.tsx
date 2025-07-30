@@ -4,11 +4,12 @@ import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { useContext, useRef, useState } from "react";
 import { setCookie } from "cookies-next";
-import { TUserContext, UserContext } from "../contexts/UserContext";
+import { UserContext } from "../contexts/UserContext";
 import Loading from "../Loading";
 import Error from "../Error";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { motion } from "motion/react";
 
 export default function Login() {
   const username = useRef<HTMLInputElement>(null);
@@ -18,9 +19,14 @@ export default function Login() {
   const [error, setError] = useState("");
   const router = useRouter();
   return loading ? (
-    <Loading />
+    <Loading className="w-screen h-screen" />
   ) : (
-    <div className="flex [@media(min-width:460px)]:justify-between justify-center px-[2vw] h-screen">
+    <motion.div
+      initial={{ opacity: 0, y: 100 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="flex [@media(min-width:460px)]:justify-between justify-center px-[2vw] h-screen"
+    >
       <div className="hidden justify-start items-center [@media(min-width:460px)]:flex">
         <h1 className="text-[4rem] font-bold">Welcome Back!</h1>
       </div>
@@ -69,6 +75,6 @@ export default function Login() {
           LogIn
         </Button>
       </form>
-    </div>
+    </motion.div>
   );
 }

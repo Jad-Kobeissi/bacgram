@@ -8,6 +8,7 @@ import axios from "axios";
 import { getCookie } from "cookies-next";
 import Loading from "../Loading";
 import Post from "../Post";
+import Nav from "../Nav";
 
 export default function Home() {
   const { user } = useContext(UserContext)!;
@@ -24,7 +25,6 @@ export default function Home() {
       })
       .then((res) => {
         setPosts([...posts, ...res.data]);
-        localStorage.setItem("posts", JSON.stringify([...posts, ...res.data]));
         setPage((prev) => prev + 1);
       })
       .catch((err) => {
@@ -37,6 +37,7 @@ export default function Home() {
   }, []);
   return (
     <>
+      <Nav />
       <h1 className="capitalize text-[2.5rem] font-bold text-center my-[20vh]">
         Hello {user?.username}!
       </h1>
@@ -44,10 +45,10 @@ export default function Home() {
       <InfiniteScroll
         next={fetchPosts}
         hasMore={hasMore}
-        loader={<Loading />}
+        loader={<Loading className="w-fit h-fit" />}
         dataLength={posts.length}
         endMessage={null}
-        className="flex flex-col items-center justify-center gap-[20vh]"
+        className="flex flex-col items-center justify-center gap-[20vh] mb-[5vh]"
       >
         {posts.map((post) => (
           <Post key={post.id as number} post={post} />

@@ -1,10 +1,10 @@
 import { motion } from "motion/react";
-export default function Loading() {
+export default function Loading({ className }: { className?: string }) {
   return (
     <motion.div
       animate={{ scale: [0.9, 1, 0.9] }}
       transition={{ repeat: Infinity, repeatType: "loop" }}
-      className="flex items-center justify-center h-screen w-screen"
+      className={`${className} flex items-center justify-center text-[1.5rem] font-bold`}
     >
       Loading...
     </motion.div>

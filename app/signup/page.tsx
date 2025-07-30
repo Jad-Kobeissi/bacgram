@@ -18,7 +18,7 @@ export default function Login() {
   const [error, setError] = useState("");
   const router = useRouter();
   return loading ? (
-    <Loading />
+    <Loading className="w-screen h-screen" />
   ) : (
     <div className="flex [@media(min-width:460px)]:justify-between justify-center px-[2vw] h-screen">
       <div className="hidden justify-start items-center [@media(min-width:460px)]:flex">

@@ -8,6 +8,7 @@ import axios from "axios";
 import { getCookie } from "cookies-next";
 import Loading from "../Loading";
 import Post from "../Post";
+import Nav from "../Nav";
 
 export default function Home() {
   const { user } = useContext(UserContext)!;
@@ -23,7 +24,10 @@ export default function Home() {
       })
       .then((res) => {
         setPosts([...posts, ...res.data]);
-        localStorage.setItem("posts", JSON.stringify([...posts, ...res.data]));
+        sessionStorage.setItem(
+          "posts",
+          JSON.stringify([...posts, ...res.data])
+        );
       })
       .catch((err) => {
         setError(err.response.data);
@@ -31,8 +35,8 @@ export default function Home() {
       });
   };
   useEffect(() => {
-    if (localStorage.getItem("posts")) {
-      setPosts(JSON.parse(localStorage.getItem("posts") as string));
+    if (sessionStorage.getItem("posts")) {
+      setPosts(JSON.parse(sessionStorage.getItem("posts") as string));
     }
   }, []);
   useEffect(() => {
@@ -40,6 +44,7 @@ export default function Home() {
   }, []);
   return (
     <>
+      <Nav />
       <h1 className="capitalize text-[2.5rem] font-bold text-center my-[20vh]">
         Welcome {user?.username}!
       </h1>
@@ -47,7 +52,7 @@ export default function Home() {
       <InfiniteScroll
         next={fetchPosts}
         hasMore={hasMore}
-        loader={<Loading />}
+        loader={<Loading className="mt-0 p-0" />}
         dataLength={posts.length}
         endMessage={null}
         className="flex flex-col items-center justify-center gap-[20vh]"
