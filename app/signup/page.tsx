@@ -13,6 +13,7 @@ import Link from "next/link";
 export default function Login() {
   const username = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
+  const profilePicture = useRef<HTMLInputElement>(null);
   const { setUser } = useContext(UserContext)!;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -30,11 +31,15 @@ export default function Login() {
           e.preventDefault();
           setLoading(true);
           setError("");
+          const formData = new FormData();
+          formData.append("username", username.current?.value as string);
+          formData.append("password", password.current?.value as string);
+          formData.append(
+            "profilePicture",
+            profilePicture.current?.files![0] as File
+          );
           axios
-            .post("/api/signup", {
-              username: username.current?.value,
-              password: password.current?.value,
-            })
+            .post("/api/signup", formData)
             .then((res) => {
               setUser(res.data.user);
               setCookie("token", res.data.token);
@@ -53,12 +58,21 @@ export default function Login() {
           placeholder="Username"
           className="px-[3vw] text-center"
           ref={username}
+          required
         />
         <Input
           type="password"
           placeholder="Password"
           className="px-[3vw] text-center"
           ref={password}
+          required
+        />
+        <Input
+          type="file"
+          accept="image/*"
+          className="px-[3vw] text-center"
+          name="profilePicture"
+          required
         />
         <div className="group relative">
           <Link href="/login">Already Have An Account? LogIn Here</Link>
