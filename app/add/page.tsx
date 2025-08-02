@@ -5,13 +5,16 @@ import Nav from "../Nav";
 import { useRef, useState } from "react";
 import axios from "axios";
 import { getCookie } from "cookies-next";
+import Loading from "../Loading";
 
 export default function Add() {
   const title = useRef<HTMLInputElement>(null);
   const content = useRef<HTMLInputElement>(null);
   const image = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <>
       <Nav />
       <div className="flex items-center md:justify-between justify-center p-[2vw] h-screen">
@@ -26,7 +29,7 @@ export default function Add() {
             const formData = new FormData();
             formData.append("title", title.current?.value as string);
             formData.append("content", content.current?.value as string);
-            if (image.current?.files) {
+            if (image.current?.files?.[0] != null) {
               formData.append("image", image.current.files[0]);
             }
             axios

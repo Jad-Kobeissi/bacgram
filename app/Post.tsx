@@ -15,13 +15,13 @@ export default function Post({ post }: { post: TPost }) {
       </div>
       <h1 className="text-[1.2rem] font-bold">Title: {post.title}</h1>
       <h1>Content: {post.content}</h1>
-      {post.image && (
+      {post.image?.trim() != null ? (
         <img
           src={post.image as string}
           alt="Post image"
           className="md:w-[20vw] md:h-[20vw] w-[60vw] h-[60vw] rounded-lg"
         />
-      )}
+      ) : null}
     </div>
   );
 }

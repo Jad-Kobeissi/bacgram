@@ -69,23 +69,31 @@ export async function POST(req: Request) {
 
     const decoded: any = await decode(authHeader);
 
-    let imageUrl: string | null = null;
+    let post;
     if (image) {
       const storageRef = ref(
         storage,
-        `${process.env.imageBucket}/${image.name}.png`
+        `${process.env.imageBucket}/${image.name}`
       );
       await uploadBytes(storageRef, image);
-      imageUrl = await getDownloadURL(storageRef);
+      let imageUrl = await getDownloadURL(storageRef);
+      post = await prisma.post.create({
+        data: {
+          title,
+          content,
+          authorId: decoded.id,
+          image: imageUrl,
+        },
+      });
+    } else {
+      post = await prisma.post.create({
+        data: {
+          title,
+          content,
+          authorId: decoded.id,
+        },
+      });
     }
-    const post = await prisma.post.create({
-      data: {
-        title,
-        content,
-        authorId: decoded.id,
-        image: imageUrl != null ? imageUrl : undefined,
-      },
-    });
 
     return Response.json(post);
   } catch (error: any) {
