@@ -43,7 +43,7 @@ export default function Profile() {
         Hello{" "}
         <img
           src={user?.profilePicture as string}
-          alt="User profile picture"
+          alt="Profile picture"
           className="md:w-[5vw] md:h-[5vw] h-[10vw] w-[10vw] rounded-full"
         />{" "}
         {user?.username}!

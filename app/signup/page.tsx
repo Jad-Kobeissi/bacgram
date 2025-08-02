@@ -72,6 +72,7 @@ export default function Login() {
           accept="image/*"
           className="px-[3vw] text-center"
           name="profilePicture"
+          ref={profilePicture}
           required
         />
         <div className="group relative">

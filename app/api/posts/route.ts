@@ -73,7 +73,7 @@ export async function POST(req: Request) {
     if (image) {
       const storageRef = ref(
         storage,
-        `${process.env.imageBucket}/${image.name}`
+        `${process.env.imageBucket}/${image.name}.png`
       );
       await uploadBytes(storageRef, image);
       imageUrl = await getDownloadURL(storageRef);
