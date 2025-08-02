@@ -27,7 +27,7 @@ export async function POST(req: Request) {
 
     const storageRef = ref(
       storage,
-      `${process.env.profilePictureBucket}/${username}.jpg`
+      `${process.env.profilePictureBucket}/${username}`
     );
     await uploadBytes(storageRef, profilePicture);
     const downloadURL = await getDownloadURL(storageRef);
