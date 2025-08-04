@@ -5,6 +5,7 @@ export interface User {
   posts: Post[];
   viewedPosts: Post[];
   profilePicture: String;
+  likedPosts: Post[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -16,6 +17,8 @@ export interface Post {
   content: String;
   viewedUsers: User[];
   image?: String;
+  likes: Number;
+  likedUsers: User[];
   createdAt: Date;
   updatedAt: Date;
 }

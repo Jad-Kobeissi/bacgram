@@ -1,6 +1,18 @@
+import { useContext, useState } from "react";
 import { Post as TPost } from "./types";
+import { UserContext } from "./contexts/UserContext";
+import axios from "axios";
+import { getCookie } from "cookies-next";
+import { Button } from "@/components/ui/button";
 
 export default function Post({ post }: { post: TPost }) {
+  const { user } = useContext(UserContext)!;
+  if (!user) throw new Error("User context is not available");
+
+  const [likes, setLikes] = useState(post.likes);
+  const [liked, setLiked] = useState(
+    user.likedPosts?.some((p) => p.id === post.id)
+  );
   return (
     <div key={post.id as number} className="border p-[4rem] w-fit">
       <div className="flex items-center gap-4">
@@ -15,6 +27,54 @@ export default function Post({ post }: { post: TPost }) {
       </div>
       <h1 className="text-[1.2rem] font-bold">Title: {post.title}</h1>
       <h1>Content: {post.content}</h1>
+      <h1>Likes: {likes as number}</h1>
+      {liked ? (
+        <Button
+          className="bg-[var(--custom-purple)] text-white border border-[var(--custom-purple)]"
+          onClick={() => {
+            setLiked(false);
+            setLikes((prev) => (prev as number) - 1);
+            axios
+              .post(
+                `/api/posts/dislike/${post.id}`,
+                {},
+                {
+                  headers: {
+                    Authorization: `Bearer ${getCookie("token")}`,
+                  },
+                }
+              )
+              .catch((err) => {
+                throw new Error("Failed to dislike post: " + err.message);
+              });
+          }}
+        >
+          Dislike
+        </Button>
+      ) : (
+        <Button
+          className="bg-[var(--custom-purple)] text-white border border-[var(--custom-purple)]"
+          onClick={() => {
+            setLiked(true);
+            setLikes((prev) => (prev as number) + 1);
+            axios
+              .post(
+                `/api/posts/like/${post.id}`,
+                {},
+                {
+                  headers: {
+                    Authorization: `Bearer ${getCookie("token")}`,
+                  },
+                }
+              )
+              .catch((err) => {
+                throw new Error("Failed to like post: " + err.message);
+              });
+          }}
+        >
+          Like
+        </Button>
+      )}
       {post.image?.trim() != null ? (
         <img
           src={post.image as string}

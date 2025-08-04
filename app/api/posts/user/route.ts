@@ -22,6 +22,7 @@ export async function GET(req: Request) {
       include: {
         author: true,
         viewedUsers: true,
+        likedUsers: true,
       },
       take: 5,
       skip: skip,

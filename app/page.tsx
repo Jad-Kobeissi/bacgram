@@ -25,12 +25,14 @@ function Nav() {
           </Link>
           <span className="w-0 h-0.5 absolute bottom-0 left-0 bg-[#d9d9d9] group-hover:w-full transition-all duration-200"></span>
         </div>
-        <div className="relative group">
-          <Link href={"#contact"} className="text-[1.2rem]">
-            Contact
+        <Button
+          asChild
+          className="text-[1.2rem] bg-[var(--custom-purple)] border border-[var(--custom-purple)] hover:bg-transparent focus:bg-transparent active:bg-transparent"
+        >
+          <Link href={"/login"} className="text-[1.2rem]">
+            LogIn
           </Link>
-          <span className="w-0 h-0.5 absolute bottom-0 left-0 bg-[#d9d9d9] group-hover:w-full transition-all duration-200"></span>
-        </div>
+        </Button>
       </div>
     </nav>
   );
@@ -47,7 +49,7 @@ function Home() {
       transition={{ duration: 0.4 }}
       ref={ref}
       id="home"
-      className="flex items-center justify-center flex-col text-center gap-[3vh] pt-[10vh]"
+      className="flex items-center justify-center flex-col text-center gap-[3vh] pt-[20vh]"
     >
       <h1 className="text-[var(--custom-white)] text-[2.5rem] text-center mt-[10vh] font-bold">
         Socialize WithIn Your School
@@ -64,7 +66,7 @@ function Home() {
         throughout the academic year.
       </p>
       <motion.a
-        href="/login"
+        href="/signup"
         className="bg-[var(--custom-purple)] flex h-fit items-center w-fit text-[1.3rem] px-[1vw] rounded-md font-bold gap-[.5vw]"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -127,7 +129,6 @@ function Contact() {
           </svg>
           <h1>jadkoneissi@gmail.com</h1>
         </Link>
-        <span className="w-0 h-0.5 absolute bottom-0 left-0 bg-[var(--custom-white)] group-hover:w-full transition-all duration-200"></span>
       </div>
       <div className="relative group w-fit">
         <Link href={"tel:81195890"} className="flex items-center gap-[1vw]">
@@ -140,7 +141,6 @@ function Contact() {
           </svg>
           <h1>+96181195890</h1>
         </Link>
-        <span className="w-0 h-0.5 absolute bottom-0 left-0 bg-[var(--custom-white)] group-hover:w-full transition-all duration-200"></span>
       </div>
     </div>
   );

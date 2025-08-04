@@ -14,6 +14,11 @@ export async function POST(req: Request) {
       where: {
         username,
       },
+      include: {
+        likedPosts: true,
+        viewedPosts: true,
+        posts: true,
+      },
     });
 
     if (!user) return new Response("User Not Found", { status: 404 });

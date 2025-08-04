@@ -20,6 +20,7 @@ model User {
   posts Post[] @relation("posts")
   viewedPosts Post[]
   profilePicture String
+  likedPosts Post[] @relation("likedPosts")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -31,6 +32,8 @@ model Post {
   title String
   content String?
   image String?
+  likes Int @default(0)
+  likedUsers User[] @relation("likedPosts")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt 
 }

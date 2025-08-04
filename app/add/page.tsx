@@ -13,7 +13,7 @@ export default function Add() {
   const image = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
   return loading ? (
-    <Loading />
+    <Loading className="h-screen" />
   ) : (
     <>
       <Nav />
