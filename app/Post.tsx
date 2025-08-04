@@ -28,6 +28,13 @@ export default function Post({ post }: { post: TPost }) {
       <h1 className="text-[1.2rem] font-bold">Title: {post.title}</h1>
       <h1>Content: {post.content}</h1>
       <h1>Likes: {likes as number}</h1>
+      {post.image?.trim() != null ? (
+        <img
+          src={post.image as string}
+          alt="Post image"
+          className="md:w-[20vw] md:h-[20vw] w-[60vw] h-[60vw] rounded-lg"
+        />
+      ) : null}
       {liked ? (
         <Button
           className="bg-[var(--custom-purple)] text-white border border-[var(--custom-purple)]"
@@ -75,13 +82,6 @@ export default function Post({ post }: { post: TPost }) {
           Like
         </Button>
       )}
-      {post.image?.trim() != null ? (
-        <img
-          src={post.image as string}
-          alt="Post image"
-          className="md:w-[20vw] md:h-[20vw] w-[60vw] h-[60vw] rounded-lg"
-        />
-      ) : null}
     </div>
   );
 }
