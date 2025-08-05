@@ -50,9 +50,13 @@ export default function Profile() {
           />{" "}
           {user?.username}!
         </h1>
-        <div className="text-center">
-          <h1>Followers: {user?.followers?.length}</h1>
-          <h1>Following: {user?.following?.length}</h1>
+        <div className="text-center flex gap-4">
+          <h1 className="text-[1.2rem]">
+            Followers: {user?.followers?.length}
+          </h1>
+          <h1 className="text-[1.2rem]">
+            Following: {user?.following?.length}
+          </h1>
         </div>
       </div>
 

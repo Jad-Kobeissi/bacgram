@@ -120,9 +120,14 @@ export default function User({ params }: { params: Promise<{ id: string }> }) {
                   ))}
               </div>
             </div>
-            <h1 className="text-center text-[1.2rem] mt-4">
-              Followers: {followers}
-            </h1>
+            <div className="mt-4 flex justify-center gap-2">
+              <h1 className="text-center text-[1.2rem]">
+                Followers: {followers}
+              </h1>
+              <h1 className="text-center text-[1.2rem]">
+                Following: {user.following.length}
+              </h1>
+            </div>
             <div className="flex flex-col items-center gap-4 mt-8">
               {user?.posts && user.posts.length > 0 ? (
                 user.posts.map((post) => (
