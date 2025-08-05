@@ -40,6 +40,9 @@ export async function POST(req: Request) {
       include: {
         posts: true,
         viewedPosts: true,
+        followers: true,
+        following: true,
+        likedPosts: true,
       },
     });
 

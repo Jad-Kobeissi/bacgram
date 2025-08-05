@@ -25,6 +25,7 @@ export default function Profile() {
         },
       })
       .then((res) => {
+        console.log(res.data);
         setPosts([...posts, ...res.data]);
         setPage((prev) => prev + 1);
       })
@@ -39,15 +40,21 @@ export default function Profile() {
   return (
     <>
       <Nav />
-      <h1 className="capitalize text-[2.5rem] font-bold text-center my-[20vh] flex items-center justify-center gap-4">
-        Hello{" "}
-        <img
-          src={user?.profilePicture as string}
-          alt="Profile picture"
-          className="md:w-[5vw] md:h-[5vw] h-[10vw] w-[10vw] rounded-full"
-        />{" "}
-        {user?.username}!
-      </h1>
+      <div className="mt-[30vh] mb-[5vh] flex flex-col items-center justify-center gap-4">
+        <h1 className="capitalize text-[2.5rem] font-bold text-center flex items-center justify-center gap-4">
+          Hello{" "}
+          <img
+            src={user?.profilePicture as string}
+            alt="Profile picture"
+            className="md:w-[5vw] md:h-[5vw] h-[10vw] w-[10vw] rounded-full"
+          />{" "}
+          {user?.username}!
+        </h1>
+        <div className="text-center">
+          <h1>Followers: {user?.followers?.length}</h1>
+          <h1>Following: {user?.following?.length}</h1>
+        </div>
+      </div>
 
       <InfiniteScroll
         next={fetchPosts}

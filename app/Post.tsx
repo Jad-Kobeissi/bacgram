@@ -4,6 +4,7 @@ import { UserContext } from "./contexts/UserContext";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function Post({ post }: { post: TPost }) {
   const { user } = useContext(UserContext)!;
@@ -13,9 +14,20 @@ export default function Post({ post }: { post: TPost }) {
   const [liked, setLiked] = useState(
     user.likedPosts?.some((p) => p.id === post.id)
   );
+  const router = useRouter();
   return (
-    <div key={post.id as number} className="border p-[4rem] w-fit">
-      <div className="flex items-center gap-4">
+    <div
+      key={post.id as number}
+      className="border p-[4rem] w-fit"
+      onClick={() => router.push(`/post/${post.id}`)}
+    >
+      <div
+        className="flex items-center gap-4"
+        onClick={(e) => {
+          e.stopPropagation();
+          router.push(`/user/${post.author.id}`);
+        }}
+      >
         <img
           src={post.author.profilePicture as string}
           alt="User profile picture"

@@ -18,6 +18,8 @@ export async function POST(req: Request) {
         likedPosts: true,
         viewedPosts: true,
         posts: true,
+        followers: true,
+        following: true,
       },
     });
 

@@ -27,6 +27,7 @@ export async function GET(req: Request) {
       include: {
         author: true,
         viewedUsers: true,
+        likedUsers: true,
       },
     });
     if (posts.length == 0)

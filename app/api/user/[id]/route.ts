@@ -24,6 +24,8 @@ export async function GET(
             author: true,
           },
         },
+        followers: true,
+        following: true,
         viewedPosts: true,
       },
     });

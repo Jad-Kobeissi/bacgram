@@ -22,6 +22,7 @@ export async function GET(
       include: {
         author: true,
         viewedUsers: true,
+        likedUsers: true,
       },
     });
 

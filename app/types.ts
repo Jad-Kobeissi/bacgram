@@ -6,6 +6,8 @@ export interface User {
   viewedPosts: Post[];
   profilePicture: String;
   likedPosts: Post[];
+  followers: User[];
+  following: User[];
   createdAt: Date;
   updatedAt: Date;
 }
