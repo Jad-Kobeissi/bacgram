@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Bacgram",
-  description: "The perfect app for your school's social network",
+  description: "The perfect app for BAC students to connect",
 };
 
 export default function RootLayout({
