@@ -18,7 +18,6 @@ export default function Grade({
   const { user } = useContext(UserContext)!;
   const context = React.use(params);
   const [posts, setPosts] = useState<TPost[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState("");
   const [forbidden, setForbidden] = useState(false);
   const [page, setPage] = useState(1);
@@ -31,7 +30,13 @@ export default function Grade({
         },
       })
       .then((res) => {
-        setPosts((prev) => [...prev, ...res.data]);
+        setPosts((prev) => {
+          const filtered = res.data.filter(
+            (post: TPost) => !prev.includes(post)
+          );
+
+          return filtered;
+        });
         setPage((prev) => prev + 1);
       })
       .catch((err) => {
@@ -45,7 +50,6 @@ export default function Grade({
   useEffect(() => {
     fetchPosts();
   }, []);
-
   return (
     <>
       <Nav />
