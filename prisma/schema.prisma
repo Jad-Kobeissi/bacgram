@@ -22,6 +22,7 @@ model User {
   profilePicture String
   followers User[] @relation("followers")
   following User[] @relation("followers")
+  grade Int
   likedPosts Post[] @relation("likedPosts")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

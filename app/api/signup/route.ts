@@ -10,10 +10,12 @@ export async function POST(req: Request) {
     const username = formData.get("username")?.toString();
     const password = formData.get("password")?.toString();
     const profilePicture = formData.get("profilePicture") as Blob;
+    const grade = parseInt(formData.get("grade")?.toString() as string);
     if (
       !username ||
       !password ||
       !profilePicture ||
+      !grade ||
       isEmpty([username, password])
     )
       return new Response("Bad Request", { status: 400 });
@@ -24,7 +26,8 @@ export async function POST(req: Request) {
       },
     });
     if (userCheck) return new Response("Username Taken", { status: 409 });
-
+    if (grade < 1 || grade > 12)
+      return new Response("Invalid Grade", { status: 400 });
     const storageRef = ref(
       storage,
       `${process.env.profilePictureBucket}/${username}`
@@ -36,6 +39,7 @@ export async function POST(req: Request) {
         username,
         password: await hash(password, 10),
         profilePicture: downloadURL,
+        grade,
       },
       include: {
         posts: true,

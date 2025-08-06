@@ -14,6 +14,7 @@ export default function Login() {
   const username = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
   const profilePicture = useRef<HTMLInputElement>(null);
+  const grade = useRef<HTMLInputElement>(null);
   const { setUser } = useContext(UserContext)!;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -67,6 +68,16 @@ export default function Login() {
           ref={password}
           required
         />
+        <Input
+          type="number"
+          className="px-[3vw] text-center"
+          placeholder="Grade (1-12)"
+          ref={grade}
+          min={1}
+          max={12}
+          required
+        />
+
         <Input
           type="file"
           accept="image/*"
