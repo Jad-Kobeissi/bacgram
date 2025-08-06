@@ -47,53 +47,63 @@ export default function Post({ post }: { post: TPost }) {
           className="md:w-[20vw] md:h-[20vw] w-[60vw] h-[60vw] rounded-lg"
         />
       ) : null}
-      {liked ? (
-        <Button
-          className="bg-[var(--custom-purple)] text-white border border-[var(--custom-purple)]"
-          onClick={() => {
-            setLiked(false);
-            setLikes((prev) => (prev as number) - 1);
-            axios
-              .post(
-                `/api/posts/dislike/${post.id}`,
-                {},
-                {
-                  headers: {
-                    Authorization: `Bearer ${getCookie("token")}`,
-                  },
-                }
-              )
-              .catch((err) => {
-                throw new Error("Failed to dislike post: " + err.message);
-              });
-          }}
-        >
-          Dislike
-        </Button>
-      ) : (
-        <Button
-          className="bg-[var(--custom-purple)] text-white border border-[var(--custom-purple)]"
-          onClick={() => {
-            setLiked(true);
-            setLikes((prev) => (prev as number) + 1);
-            axios
-              .post(
-                `/api/posts/like/${post.id}`,
-                {},
-                {
-                  headers: {
-                    Authorization: `Bearer ${getCookie("token")}`,
-                  },
-                }
-              )
-              .catch((err) => {
-                throw new Error("Failed to like post: " + err.message);
-              });
-          }}
-        >
-          Like
-        </Button>
-      )}
+      <div className="flex items-center gap-4 mt-4">
+        {liked ? (
+          <Button
+            className="bg-[var(--custom-purple)] text-white border border-[var(--custom-purple)]"
+            onClick={() => {
+              setLiked(false);
+              setLikes((prev) => (prev as number) - 1);
+              axios
+                .post(
+                  `/api/posts/dislike/${post.id}`,
+                  {},
+                  {
+                    headers: {
+                      Authorization: `Bearer ${getCookie("token")}`,
+                    },
+                  }
+                )
+                .catch((err) => {
+                  throw new Error("Failed to dislike post: " + err.message);
+                });
+            }}
+          >
+            Dislike
+          </Button>
+        ) : (
+          <Button
+            className="bg-[var(--custom-purple)] text-white border border-[var(--custom-purple)]"
+            onClick={() => {
+              setLiked(true);
+              setLikes((prev) => (prev as number) + 1);
+              axios
+                .post(
+                  `/api/posts/like/${post.id}`,
+                  {},
+                  {
+                    headers: {
+                      Authorization: `Bearer ${getCookie("token")}`,
+                    },
+                  }
+                )
+                .catch((err) => {
+                  throw new Error("Failed to like post: " + err.message);
+                });
+            }}
+          >
+            Like
+          </Button>
+        )}
+        {post.authorId === user.id ? (
+          <Button
+            variant={"destructive"}
+            className="border border-red-600 hover:bg-transparent active:bg-red-600"
+          >
+            Delete
+          </Button>
+        ) : null}
+      </div>
     </div>
   );
 }

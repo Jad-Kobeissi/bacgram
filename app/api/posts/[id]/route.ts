@@ -1,4 +1,4 @@
-import { verify } from "jsonwebtoken";
+import { decode, verify } from "jsonwebtoken";
 import { prisma } from "../../init";
 
 export async function GET(
@@ -29,6 +29,43 @@ export async function GET(
     if (!post) return new Response("Post not found", { status: 404 });
 
     return Response.json(post);
+  } catch (error: any) {
+    return new Response(error, { status: 500 });
+  }
+}
+export async function DELETE(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const authHeader = req.headers.get("Authorization")?.split(" ")[1];
+
+    if (!authHeader || !verify(authHeader, process.env.SECRET as string)) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
+    const { id } = await params;
+
+    if (!id) return new Response("Post ID is required", { status: 400 });
+    const post = await prisma.post.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+    });
+
+    const decoded: any = decode(authHeader);
+
+    if (post?.authorId !== decoded.id) {
+      return new Response("Forbidden", { status: 403 });
+    }
+
+    await prisma.post.delete({
+      where: {
+        id: parseInt(id),
+      },
+    });
+
+    return new Response("Post deleted successfully", { status: 200 });
   } catch (error: any) {
     return new Response(error, { status: 500 });
   }
