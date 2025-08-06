@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bacgram",
+  title: "Bacgram - Perfect app for BAC students",
   description: "The perfect app for BAC students to connect",
 };
 
