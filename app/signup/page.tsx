@@ -39,6 +39,7 @@ export default function Login() {
             "profilePicture",
             profilePicture.current?.files![0] as File
           );
+          formData.append("grade", grade.current?.value as string);
           axios
             .post("/api/signup", formData)
             .then((res) => {

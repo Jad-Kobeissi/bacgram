@@ -9,12 +9,15 @@ import { getCookie } from "cookies-next";
 import Loading from "../Loading";
 import Post from "../Post";
 import Nav from "../Nav";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const { user } = useContext(UserContext)!;
   const [posts, setPosts] = useState<TPost[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
+  const router = useRouter();
   const fetchPosts = async () => {
     axios
       .get("/api/posts", {
@@ -23,7 +26,7 @@ export default function Home() {
         },
       })
       .then((res) => {
-        setPosts([...posts, ...res.data]);
+        setPosts((prev) => [...prev, ...res.data]);
         sessionStorage.setItem(
           "posts",
           JSON.stringify([...posts, ...res.data])
@@ -45,10 +48,19 @@ export default function Home() {
   return (
     <>
       <Nav />
-      <h1 className="capitalize text-[2.5rem] font-bold text-center my-[20vh]">
+      <h1 className="capitalize text-[2.5rem] font-bold text-center mt-[20vh]">
         Welcome {user?.username}!
       </h1>
-
+      <div className="flex justify-center mb-[10vh] mt-[5vh]">
+        <Button
+          className="bg-[var(--custom-purple)] border border-[var(--custom-purple)]"
+          onClick={() => {
+            router.push(`/grade/${user?.grade}`);
+          }}
+        >
+          View Your Grade's Posts
+        </Button>
+      </div>
       <InfiniteScroll
         next={fetchPosts}
         hasMore={hasMore}

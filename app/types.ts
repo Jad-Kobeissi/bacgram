@@ -5,6 +5,7 @@ export interface User {
   posts: Post[];
   viewedPosts: Post[];
   profilePicture: String;
+  grade: Number;
   likedPosts: Post[];
   followers: User[];
   following: User[];

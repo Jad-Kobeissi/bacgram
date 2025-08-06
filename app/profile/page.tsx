@@ -58,6 +58,7 @@ export default function Profile() {
             Following: {user?.following?.length}
           </h1>
         </div>
+        <h1>You are in grade {user?.grade as number}</h1>
       </div>
 
       <InfiniteScroll
