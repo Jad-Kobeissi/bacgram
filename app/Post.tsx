@@ -99,6 +99,21 @@ export default function Post({ post }: { post: TPost }) {
           <Button
             variant={"destructive"}
             className="border border-red-600 hover:bg-transparent active:bg-red-600"
+            onClick={(e) => {
+              e.stopPropagation();
+              axios
+                .delete(`/api/posts/${post.id}`, {
+                  headers: {
+                    Authorization: `Bearer ${getCookie("token")}`,
+                  },
+                })
+                .then(() => {
+                  window.location.reload();
+                })
+                .catch((err) => {
+                  throw new Error("Failed to delete post: " + err.message);
+                });
+            }}
           >
             Delete
           </Button>
