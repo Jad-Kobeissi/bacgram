@@ -6,33 +6,33 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getCookie } from "cookies-next";
+import Lock from "./lock-solid-full";
+import Plus from "./plus-solid-full";
+import Heart from "./heart-solid-full";
+import Profile from "./user-solid-full";
 function Nav() {
   return (
-    <nav className="flex items-center justify-between fixed w-screen px-[2vw] py-[2vh]">
-      <div>
-        <Button className="text-[1.5rem]">Bacgram</Button>
-      </div>
-      <div className="flex items-center justify-center gap-[3vw]">
+    <nav className="px-[2rem] py-[.6rem] flex items-center justify-between h-fit gap-[3vw] fixed w-screen text-[var(--custom-white)]">
+      <button className="text-[1.5rem] font-bold">Bacgram</button>
+      <div className="items-center h-full flex md:gap-[3rem] gap-[2rem]">
         <div className="relative group">
-          <Link href={"#home"} className="text-[1.2rem]">
+          <Link href={"#home"} className="text-[1.3rem]">
             Home
           </Link>
-          <span className="w-0 h-0.5 absolute bottom-0 left-0 bg-[#d9d9d9] group-hover:w-full transition-all duration-200"></span>
+          <span className="absolute bottom-0 left-0 bg-[#d9d9d9] h-0.5 w-0 group-hover:w-full transition-all duration-200"></span>
         </div>
         <div className="relative group">
-          <Link href={"#about"} className="text-[1.2rem]">
+          <Link href={"#about"} className="text-[1.3rem]">
             About
           </Link>
-          <span className="w-0 h-0.5 absolute bottom-0 left-0 bg-[#d9d9d9] group-hover:w-full transition-all duration-200"></span>
+          <span className="absolute bottom-0 left-0 bg-[#d9d9d9] h-0.5 w-0 group-hover:w-full transition-all duration-200"></span>
         </div>
-        <Button
-          asChild
-          className="text-[1.2rem] bg-[var(--custom-purple)] border border-[var(--custom-purple)] hover:bg-transparent focus:bg-transparent active:bg-transparent"
-        >
-          <Link href={"/login"} className="text-[1.2rem]">
-            LogIn
+        <div className="relative group">
+          <Link href={"#features"} className="text-[1.3rem]">
+            Features
           </Link>
-        </Button>
+          <span className="absolute bottom-0 left-0 bg-[#d9d9d9] h-0.5 w-0 group-hover:w-full transition-all duration-200"></span>
+        </div>
       </div>
     </nav>
   );
@@ -40,46 +40,37 @@ function Nav() {
 function Home() {
   const { ref, inView } = useInView({
     triggerOnce: false,
-    delay: 500,
+    delay: 200,
   });
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={inView ? { y: 0, opacity: 1 } : {}}
-      transition={{ duration: 0.4 }}
+      initial={{ opacity: 0, y: 100 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
       ref={ref}
       id="home"
-      className="flex items-center justify-center flex-col text-center gap-[3vh] pt-[20vh]"
+      transition={{ duration: 0.4 }}
+      className="px-[5vw] pt-[20vh] font-semibold flex flex-col gap-[3vh] h-screen home"
     >
-      <h1 className="text-[var(--custom-white)] text-[2.5rem] text-center mt-[10vh] font-bold">
-        Socialize WithIn Your School
-      </h1>
-      <p className="md:w-[48vw] text-[1.2rem] w-screen">
-        <span className="text-[var(--custom-purple)]">Connect, share</span>, and{" "}
-        <span className="text-[var(--custom-purple)]">stay updated</span> with
-        your classmates. Bacgram is THE school's private space to{" "}
-        <span className="text-[var(--custom-purple)]">
-          post moments, join discussions,
-        </span>{" "}
-        and build{" "}
-        <span className="text-[var(--custom-purple)]">lasting memories</span>{" "}
-        throughout the academic year.
+      <h1 className="md:text-[4.33rem] text-[3.33rem]">Welcome To Bacgram!</h1>
+      <p className="md:w-[45vw] w-full">
+        <span className="text-[var(--custom-blue)]">Connect</span>,{" "}
+        <span className="text-[var(--custom-blue)]">share</span>,{" "}
+        <span className="text-[var(--custom-blue)]">stay</span> updated with
+        your classmates. Bacgram is THE school's private space moments{" "}
+        <span className="text-[var(--custom-blue)]">post</span>,{" "}
+        <span className="text-[var(--custom-blue)]">join</span> discussions, and{" "}
+        <span className="text-[var(--custom-blue)]">buid</span> lasting
+        memories throughout the academic year.
       </p>
-      <motion.a
-        href="/signup"
-        className="bg-[var(--custom-purple)] flex h-fit items-center w-fit text-[1.3rem] px-[1vw] rounded-md font-bold gap-[.5vw]"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 640 640"
-          className="fill-[var(--custom-white)] w-[1.3rem] h-fit"
-        >
-          <path d="M192 384L88.5 384C63.6 384 48.3 356.9 61.1 335.5L114 247.3C122.7 232.8 138.3 224 155.2 224L250.2 224C326.3 95.1 439.8 88.6 515.7 99.7C528.5 101.6 538.5 111.6 540.3 124.3C551.4 200.2 544.9 313.7 416 389.8L416 484.8C416 501.7 407.2 517.3 392.7 526L304.5 578.9C283.2 591.7 256 576.3 256 551.5L256 448C256 412.7 227.3 384 192 384L191.9 384zM464 224C464 197.5 442.5 176 416 176C389.5 176 368 197.5 368 224C368 250.5 389.5 272 416 272C442.5 272 464 250.5 464 224z" />
-        </svg>{" "}
-        Get Started
-      </motion.a>
+      <div className="flex gap-[1.5rem]">
+        <button className="bg-[var(--custom-blue)] border border-[var(--custom-blue)] hover:bg-transparent focus:bg-transparent active:bg-transparent text-[1.5rem] w-[8.5rem] h-[2.5rem] transition-colors duration-300 rounded-md flex items-center justify-center font-semibold">
+          LogIn
+        </button>
+        <h1 className="text-[1.5rem] font-bold">OR</h1>
+        <button className="bg-[var(--custom-gray)] hover:bg-transparent active:bg-transparent focus:bg-transparent text-[1.5rem] w-[8.5rem] h-[2.5rem] border border-[var(--custom-gray)] transition-colors duration-300 rounded-md flex items-center justify-center font-semibold">
+          SignUp
+        </button>
+      </div>
     </motion.div>
   );
 }
@@ -89,32 +80,88 @@ function About() {
     delay: 500,
   });
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={inView ? { y: 0, opacity: 1 } : {}}
-      transition={{ duration: 0.4 }}
+    <div
       id="about"
       ref={ref}
-      className="flex items-center justify-center flex-col text-center gap-[3vh] mt-[50vh] mb-[30vh]"
+      className="flex items-center justify-center flex-col text-center gap-[3vh] bg-[#181818] min-h-screen text-[var(--custom-white)]"
     >
-      <h1 className="text-[2.5rem] font-bold text-center text-[var(--custom-white)]">
+      <motion.h1
+        initial={{ opacity: 0, y: 50 }}
+        animate={inView ? { y: 0, opacity: 1 } : {}}
+        transition={{ duration: 0.4 }}
+        className="text-[2.5rem] font-bold text-center text-[var(--custom-white)]"
+      >
         What Is Bacgram?
-      </h1>
-      <p className="md:w-[48vw] text-[1.2rem] w-screen">
-        <span className="text-[var(--custom-purple)]">Bacgram</span> is a social
+      </motion.h1>
+      <motion.p
+        initial={{ opacity: 0, y: 50 }}
+        animate={inView ? { y: 0, opacity: 1 } : {}}
+        transition={{ duration: 0.4 }}
+        className="md:w-[50vw] text-[1.2rem] w-screen"
+      >
+        <span className="text-[var(--custom-blue)]">Bacgram</span> is a social
         platform designed exclusively for students at BAC,n It allows users to{" "}
-        <span className="text-[var(--custom-purple)]">share posts</span>, and{" "}
-        <span className="text-[var(--custom-purple)]">stay connected</span>{" "}
+        <span className="text-[var(--custom-blue)]">share posts</span>, and{" "}
+        <span className="text-[var(--custom-blue)]">stay connected</span>{" "}
         through a familiar, secure interface. Whether you're documenting school
         events, starting conversations, or just keeping in touch, Bacgram helps
         bring our student community closer together.
-      </p>
-    </motion.div>
+      </motion.p>
+    </div>
+  );
+}
+function Features() {
+  return (
+    <div className="bg-[#1f1f1f] pt-[10vh] text-[var(--custom-white)] h-screen w-screen">
+      <h1 className="text-center text-[3.5rem] font-bold">Features</h1>
+      <div className="grid md:grid-cols-2 grid-cols-1 place-items-center w-screen gap-4">
+        <div className="bg-[#1e1e1e] px-[2vw] py-[3vh] text-left flex flex-col rounded-md">
+          <div className="flex w-full justify-center">
+            <Lock className={"w-[5rem] fill-[#e0e0e0]"} />
+          </div>
+          <h1 className="text-[2rem] font-bold">Security</h1>
+          <p className="w-[17rem] contrast-75">
+            Highest security to ensure that your web experience remains secure
+            at all times
+          </p>
+        </div>
+        <div className="bg-[#1e1e1e] px-[2vw] py-[3vh] text-left flex flex-col rounded-md">
+          <div className="flex w-full justify-center">
+            <Plus className={"w-[5rem] fill-[#FF2D55]"} />
+          </div>
+          <h1 className="text-[2rem] font-bold">Post Creation</h1>
+          <p className="w-[17rem] contrast-75">
+            Users can create posts, with an image option being available
+          </p>
+        </div>
+        <div className="bg-[#1e1e1e] px-[2vw] py-[3vh] text-left flex flex-col rounded-md">
+          <div className="flex w-full justify-center">
+            <Heart className={"w-[5rem] fill-[#FF2D55]"} />
+          </div>
+          <h1 className="text-[2rem] font-bold">Likes</h1>
+          <p className="w-[17rem] contrast-75">
+            Users can like a post to engage with the creator
+          </p>
+        </div>
+        <div className="bg-[#1e1e1e] px-[2vw] py-[3vh] text-left flex flex-col rounded-md">
+          <div className="flex w-full justify-center">
+            <Profile className={"w-[5rem] fill-[#e0e0e0]"} />
+          </div>
+          <h1 className="text-[2rem] font-bold">Profile</h1>
+          <p className="w-[17rem] contrast-75">
+            User profiles are available with username, grade and followers{" "}
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
 function Contact() {
   return (
-    <div id="contact" className="p-[2vw] mb-[5vw]">
+    <div
+      id="contact"
+      className="p-[2vw] bg-[#131313] h-fit text-[var(--custom-white)]"
+    >
       <div className="relative group w-fit">
         <Link
           href={"mailto:jadkoneissi@gmail.com"}
@@ -157,6 +204,7 @@ export default function Main() {
       <Nav />
       <Home />
       <About />
+      <Features />
       <Contact />
     </>
   );

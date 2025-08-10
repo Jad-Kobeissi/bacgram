@@ -10,6 +10,10 @@ html {
 :root {
   --custom-purple: #4f2dfa;
   --custom-white: #d9d9d9;
+  --custom-blue: #3b82f6;
+  --custom-blue-hover: #2563eb;
+  --custom-gray: #2e2e2e;
+  --custom-gray-hover: #404040;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -45,6 +49,8 @@ html {
 }
 body {
   color: var(--custom-white);
+}
+.home {
   background: linear-gradient(to right, #121212, #191919);
 }
 @theme {
