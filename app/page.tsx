@@ -111,10 +111,23 @@ function About() {
   );
 }
 function Features() {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    delay: 1,
+  });
   return (
-    <div className="bg-[#1f1f1f] pt-[10vh] text-[var(--custom-white)] h-screen w-screen">
+    <div
+      className="bg-[#1f1f1f] pt-[10vh] text-[var(--custom-white)] h-screen w-screen"
+      id="features"
+    >
       <h1 className="text-center text-[3.5rem] font-bold">Features</h1>
-      <div className="grid md:grid-cols-2 grid-cols-1 place-items-center w-screen gap-4">
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.4 }}
+        ref={ref}
+        className="grid md:grid-cols-2 grid-cols-1 place-items-center w-screen gap-4"
+      >
         <div className="bg-[#1e1e1e] px-[2vw] py-[3vh] text-left flex flex-col rounded-md">
           <div className="flex w-full justify-center">
             <Lock className={"w-[5rem] fill-[#e0e0e0]"} />
@@ -152,7 +165,7 @@ function Features() {
             User profiles are available with username, grade and followers{" "}
           </p>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

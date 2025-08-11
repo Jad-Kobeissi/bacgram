@@ -49,6 +49,7 @@ html {
 }
 body {
   color: var(--custom-white);
+  background-color: #121212;
 }
 .home {
   background: linear-gradient(to right, #121212, #191919);
