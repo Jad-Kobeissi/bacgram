@@ -65,7 +65,11 @@ export default function Profile() {
               is in grade {user?.grade as number}
             </p>
           </h1>
-          <Button variant={"destructive"} onClick={openModal}>
+          <Button
+            variant={"destructive"}
+            className="border-red-600 border hover:bg-transparent transition-all duration-300"
+            onClick={openModal}
+          >
             Delete Your Account
           </Button>
         </div>
