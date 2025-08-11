@@ -1,4 +1,5 @@
-import { prisma } from "@/app/api/init";
+import { prisma, storage } from "@/app/api/init";
+import { deleteObject, ref } from "firebase/storage";
 import { decode, verify } from "jsonwebtoken";
 
 export async function GET(
@@ -67,6 +68,13 @@ export async function DELETE(
         id: parseInt(id as string),
       },
     });
+
+    const userRef = ref(
+      storage,
+      `${process.env.profilePictureBucket}/${decoded.username}`
+    );
+
+    deleteObject(userRef);
 
     return new Response("Post Deleted");
   } catch (error: any) {
