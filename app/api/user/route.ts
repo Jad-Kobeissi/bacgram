@@ -38,7 +38,7 @@ export async function GET(req: Request) {
     return new Response(error, { status: 500 });
   }
 }
-export async function UPDATE(req: Request) {
+export async function PUT(req: Request) {
   try {
     const authHeader = req.headers.get("Authorization")?.split(" ")[1];
 
