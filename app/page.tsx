@@ -77,7 +77,7 @@ function Home() {
 function About() {
   const { ref, inView } = useInView({
     triggerOnce: false,
-    delay: 500,
+    delay: 1000,
   });
   return (
     <div
@@ -120,7 +120,7 @@ function Card({
   text: string;
 }) {
   const { ref, inView } = useInView({
-    delay: 0.3,
+    delay: 500,
   });
   return (
     <motion.div
