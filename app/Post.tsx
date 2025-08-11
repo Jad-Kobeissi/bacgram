@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Post as TPost } from "./types";
 import { UserContext } from "./contexts/UserContext";
 import axios from "axios";
@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 
 export default function Post({ post }: { post: TPost }) {
   const { user } = useContext(UserContext)!;
+  const dialogRef = useRef<HTMLDialogElement>(null);
   if (!user) throw new Error("User context is not available");
 
   const [likes, setLikes] = useState(post.likes);
@@ -101,23 +102,55 @@ export default function Post({ post }: { post: TPost }) {
             className="border border-red-600 hover:bg-transparent active:bg-red-600"
             onClick={(e) => {
               e.stopPropagation();
-              axios
-                .delete(`/api/posts/${post.id}`, {
-                  headers: {
-                    Authorization: `Bearer ${getCookie("token")}`,
-                  },
-                })
-                .then(() => {
-                  window.location.reload();
-                })
-                .catch((err) => {
-                  throw new Error("Failed to delete post: " + err.message);
-                });
+              dialogRef.current?.showModal();
             }}
           >
             Delete
           </Button>
         ) : null}
+        <dialog
+          ref={dialogRef}
+          className="min-h-screen min-w-screen bg-transparent backdrop-blur-md rounded-md"
+        >
+          <div className="flex items-center justify-center h-screen flex-col">
+            <div className="bg-[#121212] flex flex-col items-center gap-[1rem] py-[4rem] px-[3rem]">
+              <h1 className="text-[1.5rem] text-white">
+                Are you sure you want to delete this post?
+              </h1>
+              <div className="gap-[2rem] flex items-center">
+                <Button
+                  variant={"destructive"}
+                  onClick={() => {
+                    axios
+                      .delete(`/api/posts/${post.id}`, {
+                        headers: {
+                          Authorization: `Bearer ${getCookie("token")}`,
+                        },
+                      })
+                      .then(() => {
+                        window.location.reload();
+                      })
+                      .catch((err) => {
+                        throw new Error(
+                          "Failed to delete post: " + err.message
+                        );
+                      });
+                  }}
+                >
+                  Delete
+                </Button>
+                <Button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    dialogRef.current?.close();
+                  }}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </div>
+        </dialog>
       </div>
     </div>
   );

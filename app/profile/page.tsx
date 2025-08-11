@@ -94,7 +94,7 @@ export default function Profile() {
       {error && <Error className="text-center">{error}</Error>}
       <dialog
         ref={modalRef}
-        className="min-w-screen min-h-screen bg-transparent"
+        className="min-w-screen min-h-screen bg-transparent backdrop-blur-md"
       >
         <div className="flex flex-col justify-center items-center h-screen backdrop-blur-md gap-[1rem]">
           <div className="flex items-center flex-col gap-[1rem] bg-[#121212] text-white px-[3rem] py-[4rem] rounded-md">
