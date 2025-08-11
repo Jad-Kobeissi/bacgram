@@ -1,5 +1,6 @@
 import { decode, verify } from "jsonwebtoken";
 import { prisma } from "../init";
+import { isEmpty } from "../isEmpty";
 
 export async function GET(req: Request) {
   try {
@@ -51,6 +52,31 @@ export async function PUT(req: Request) {
     const username = formData.get("username");
 
     const decoded: any = decode(authHeader);
+
+    if (grade == "" && username == "")
+      return new Response("Please fill out a field", { status: 400 });
+
+    const user = await prisma.user.findUnique({ where: { id: decoded.id } });
+    if (username != null) {
+      const userCheck = await prisma.user.findFirst({
+        where: {
+          username: username as string,
+        },
+      });
+
+      if (userCheck) return new Response("Username Taken", { status: 400 });
+    }
+    const newUser = await prisma.user.update({
+      where: {
+        id: decoded.id,
+      },
+      data: {
+        grade: grade != "" ? parseInt(grade as string) : user?.grade,
+        username: username != "" ? (username as string) : user?.username,
+      },
+    });
+
+    return Response.json(newUser);
   } catch (error: any) {
     return new Response(error, { status: 500 });
   }

@@ -12,6 +12,7 @@ import Nav from "../Nav";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
 
 export default function Profile() {
   const { user } = useContext(UserContext)!;
@@ -19,7 +20,10 @@ export default function Profile() {
   const [page, setPage] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
+  const username = useRef<HTMLInputElement>(null);
+  const grade = useRef<HTMLInputElement>(null);
   const modalRef = useRef<HTMLDialogElement>(null);
+  const editModalRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
   const openModal = () => {
     modalRef.current?.showModal();
@@ -52,26 +56,38 @@ export default function Profile() {
     <>
       <Nav />
       <div className="mt-[30vh] mb-[5vh] flex flex-col items-center justify-center gap-4">
-        <div className="capitalize text-[2.5rem] font-bold text-center flex items-center justify-center gap-4">
-          <img
-            src={user?.profilePicture as string}
-            alt="Profile picture"
-            className="md:w-[5vw] md:h-[5vw] h-[10vw] w-[10vw] rounded-full"
-          />{" "}
-          <h1 className="flex items-center gap-[.5rem]">
-            {user?.username}
+        <div className="capitalize text-[2.5rem] font-bold text-center flex md:flex-row flex-col items-center justify-center gap-4">
+          <div className="flex items-center gap-[1rem]">
+            <img
+              src={user?.profilePicture as string}
+              alt="Profile picture"
+              className="md:w-[5vw] md:h-[5vw] h-[10vw] w-[10vw] rounded-full"
+            />{" "}
+            <h1 className="flex items-center gap-[.5rem]">
+              {user?.username}
 
-            <p className="text-white text-[1.3rem] contrast-[.25]">
-              is in grade {user?.grade as number}
-            </p>
-          </h1>
-          <Button
-            variant={"destructive"}
-            className="border-red-600 border hover:bg-transparent transition-all duration-300"
-            onClick={openModal}
-          >
-            Delete Your Account
-          </Button>
+              <p className="text-white text-[1.3rem] contrast-[.25]">
+                is in grade {user?.grade as number}
+              </p>
+            </h1>
+          </div>
+          <div className="gap-[2rem] flex flex-col">
+            <Button
+              variant={"destructive"}
+              className="border-red-600 border hover:bg-transparent transition-all duration-300"
+              onClick={openModal}
+            >
+              Delete Your Account
+            </Button>
+            <Button
+              className="border-[var(--custom-blue)] border hover:bg-transparent transition-all duration-300 bg-[var(--custom-blue)]"
+              onClick={() => {
+                editModalRef.current?.showModal();
+              }}
+            >
+              Edit Account
+            </Button>
+          </div>
         </div>
         <div className="text-center flex gap-4">
           <h1 className="text-[1.2rem]">
@@ -131,6 +147,59 @@ export default function Profile() {
               </Button>
               <Button onClick={closeModal}>Close</Button>
             </div>
+          </div>
+        </div>
+      </dialog>
+      <dialog
+        ref={editModalRef}
+        className="min-h-screen min-w-screen bg-transparent backdrop-blur-md"
+      >
+        <div className="flex items-center justify-center flex-col h-screen">
+          <div className="bg-[#121212] px-[7rem] py-[4rem] rounded flex flex-col gap-[1rem]">
+            <h1 className="text-[2rem] text-white">Edit Your Profile</h1>
+            <form
+              className="flex flex-col items-center justify-center gap-[1rem]"
+              onSubmit={(e) => {
+                e.preventDefault();
+                const formData = new FormData();
+
+                formData.append("username", username.current?.value as string);
+                formData.append("grade", grade.current?.value as string);
+
+                axios
+                  .put("/api/user", formData, {
+                    headers: {
+                      Authorization: `Bearer ${getCookie("token")}`,
+                    },
+                  })
+                  .then((res) => {
+                    alert("Updated!");
+                    localStorage.setItem("user", JSON.stringify(res.data));
+                    window.location.reload();
+                  })
+                  .catch((err) => {
+                    setError(err.response.data);
+                    console.log(err);
+                  });
+              }}
+            >
+              <Input
+                type="text"
+                placeholder="Username"
+                ref={username}
+                className="text-white"
+              />
+              <Input
+                type="number"
+                placeholder="Grade"
+                ref={grade}
+                className="text-white"
+                max={12}
+              />
+              <Button className="bg-[var(--custom-blue)] border border-[var(--custom-blue)] transition-all duration-200 px-[3vw]">
+                Edit
+              </Button>
+            </form>
           </div>
         </div>
       </dialog>
