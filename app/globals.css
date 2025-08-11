@@ -6,7 +6,6 @@
 html {
   scroll-behavior: smooth;
 }
-
 :root {
   --custom-purple: #4f2dfa;
   --custom-white: #d9d9d9;
@@ -47,9 +46,11 @@ html {
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 }
+
 body {
   color: var(--custom-white);
   background-color: #121212;
+  overflow-x: hidden;
 }
 .home {
   background: linear-gradient(to right, #121212, #191919);

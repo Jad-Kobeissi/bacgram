@@ -38,7 +38,7 @@ export default function Post({ post }: { post: TPost }) {
         </h1>
       </div>
       <h1 className="text-[1.2rem] font-bold">Title: {post.title}</h1>
-      <h1>Content: {post.content}</h1>
+      <p className="contrast-[.25]">Content: {post.content}</p>
       <h1>Likes: {likes as number}</h1>
       {post.image?.trim() != null ? (
         <img

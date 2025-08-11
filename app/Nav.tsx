@@ -34,6 +34,7 @@ export default function Nav() {
             onClick={() => {
               deleteCookie("token");
               sessionStorage.clear();
+              localStorage.clear();
               router.push("/");
             }}
           >

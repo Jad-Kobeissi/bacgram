@@ -58,7 +58,7 @@ export default function Home() {
             router.push(`/grade/${user?.grade}`);
           }}
         >
-          View Your Grade's Posts
+          View Your Grade's Wall
         </Button>
       </div>
       <InfiniteScroll

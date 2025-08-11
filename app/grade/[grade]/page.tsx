@@ -5,8 +5,10 @@ import Loading from "@/app/Loading";
 import Nav from "@/app/Nav";
 import Post from "@/app/Post";
 import { Post as TPost } from "@/app/types";
+import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { getCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -50,9 +52,11 @@ export default function Grade({
   useEffect(() => {
     fetchPosts();
   }, []);
+  const router = useRouter();
   return (
     <>
       <Nav />
+
       <InfiniteScroll
         next={fetchPosts}
         dataLength={posts.length}
@@ -60,11 +64,21 @@ export default function Grade({
         loader={<Loading />}
         className="flex flex-col items-center justify-center gap-[20vh] mt-[30vh]"
       >
-        {!forbidden && (
-          <h1 className="text-[1.5rem] text-center">
-            You are viewing grade {context.grade}'s wall!
-          </h1>
-        )}
+        <div className="flex items-center flex-col gap-[5vh]">
+          {!forbidden && (
+            <h1 className="text-[1.5rem] text-center">
+              You are viewing grade {context.grade}'s wall!
+            </h1>
+          )}
+          <Button
+            className="bg-[var(--custom-blue)] border border-[var(--custom-blue)] w-fit"
+            onClick={() => {
+              router.push(`/home`);
+            }}
+          >
+            View All Posts
+          </Button>
+        </div>
         {posts.map((post) => (
           <Post post={post} key={post.id as number} />
         ))}
