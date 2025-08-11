@@ -31,7 +31,7 @@ export async function GET(req: Request) {
       skip: skip,
     });
 
-    if (!posts.length) return new Response("Posts not found", { status: 404 });
+    if (!posts.length) return new Response("User not found", { status: 404 });
 
     return Response.json(posts);
   } catch (error: any) {
