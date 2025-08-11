@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
 import { useInView } from "react-intersection-observer";
 import Link from "next/link";
-import { useEffect } from "react";
+import { ComponentType, FC, ReactElement, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getCookie } from "cookies-next";
 import Lock from "./lock-solid-full";
@@ -110,6 +110,34 @@ function About() {
     </div>
   );
 }
+function Card({
+  Svg,
+  title,
+  text,
+}: {
+  Svg: ComponentType<{ className?: string }>;
+  title: string;
+  text: string;
+}) {
+  const { ref, inView } = useInView({
+    delay: 0.3,
+  });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 100 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.4 }}
+      className="bg-[#1e1e1e] px-[2vw] py-[3vh] text-left flex flex-col rounded-md"
+    >
+      <div className="flex w-full justify-center">
+        <Svg className="w-[5rem] fill-[#e0e0e0]" />
+      </div>
+      <h1 className="text-[2rem] font-bold">{title}</h1>
+      <p className="w-[17rem] contrast-75">{text}</p>
+    </motion.div>
+  );
+}
 function Features() {
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -128,43 +156,28 @@ function Features() {
         ref={ref}
         className="grid md:grid-cols-2 grid-cols-1 place-items-center w-screen gap-4"
       >
-        <div className="bg-[#1e1e1e] px-[2vw] py-[3vh] text-left flex flex-col rounded-md">
-          <div className="flex w-full justify-center">
-            <Lock className={"w-[5rem] fill-[#e0e0e0]"} />
-          </div>
-          <h1 className="text-[2rem] font-bold">Security</h1>
-          <p className="w-[17rem] contrast-75">
-            Highest security to ensure that your web experience remains secure
-            at all times
-          </p>
-        </div>
-        <div className="bg-[#1e1e1e] px-[2vw] py-[3vh] text-left flex flex-col rounded-md">
-          <div className="flex w-full justify-center">
-            <Plus className={"w-[5rem] fill-[#FF2D55]"} />
-          </div>
-          <h1 className="text-[2rem] font-bold">Post Creation</h1>
-          <p className="w-[17rem] contrast-75">
-            Users can create posts, with an image option being available
-          </p>
-        </div>
-        <div className="bg-[#1e1e1e] px-[2vw] py-[3vh] text-left flex flex-col rounded-md">
-          <div className="flex w-full justify-center">
-            <Heart className={"w-[5rem] fill-[#FF2D55]"} />
-          </div>
-          <h1 className="text-[2rem] font-bold">Likes</h1>
-          <p className="w-[17rem] contrast-75">
-            Users can like a post to engage with the creator
-          </p>
-        </div>
-        <div className="bg-[#1e1e1e] px-[2vw] py-[3vh] text-left flex flex-col rounded-md">
-          <div className="flex w-full justify-center">
-            <Profile className={"w-[5rem] fill-[#e0e0e0]"} />
-          </div>
-          <h1 className="text-[2rem] font-bold">Profile</h1>
-          <p className="w-[17rem] contrast-75">
-            User profiles are available with username, grade and followers{" "}
-          </p>
-        </div>
+        <Card
+          Svg={Lock}
+          title={"Security"}
+          text={
+            "Highest security to ensure that your web experience remains secure at all times"
+          }
+        />
+        <Card
+          Svg={Plus}
+          title={"Post Creation"}
+          text={"Users can create posts, with an image option being available"}
+        />
+        <Card
+          Svg={Heart}
+          title="Likes"
+          text="Users can like posts to engage wuth the creator"
+        />
+        <Card
+          Svg={Profile}
+          title="Profile"
+          text="User profiles are availablr with username, grade and followers"
+        />
       </motion.div>
     </div>
   );

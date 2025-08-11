@@ -1,7 +1,7 @@
 export default function Heart({ className }: { className?: String }) {
   return (
     <svg
-      className={className as string}
+      className={"w-[5rem] fill-[#FF2D55]"}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 640 640"
     >
