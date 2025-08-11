@@ -53,7 +53,7 @@ export default function Home() {
       </h1>
       <div className="flex justify-center mb-[10vh] mt-[5vh]">
         <Button
-          className="bg-[var(--custom-purple)] border border-[var(--custom-purple)]"
+          className="bg-[var(--custom-blue)] border border-[var(--custom-blue)]"
           onClick={() => {
             router.push(`/grade/${user?.grade}`);
           }}

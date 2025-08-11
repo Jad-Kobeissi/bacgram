@@ -42,6 +42,7 @@ function Home() {
     triggerOnce: false,
     delay: 200,
   });
+  const router = useRouter();
   return (
     <motion.div
       initial={{ opacity: 0, y: 100 }}
@@ -63,11 +64,21 @@ function Home() {
         memories throughout the academic year.
       </p>
       <div className="flex gap-[1.5rem]">
-        <button className="bg-[var(--custom-blue)] border border-[var(--custom-blue)] hover:bg-transparent focus:bg-transparent active:bg-transparent text-[1.5rem] w-[8.5rem] h-[2.5rem] transition-colors duration-300 rounded-md flex items-center justify-center font-semibold">
+        <button
+          className="bg-[var(--custom-blue)] border border-[var(--custom-blue)] hover:bg-transparent focus:bg-transparent active:bg-transparent text-[1.5rem] w-[8.5rem] h-[2.5rem] transition-colors duration-300 rounded-md flex items-center justify-center font-semibold"
+          onClick={() => {
+            router.push("/login");
+          }}
+        >
           LogIn
         </button>
         <h1 className="text-[1.5rem] font-bold">OR</h1>
-        <button className="bg-[var(--custom-gray)] hover:bg-transparent active:bg-transparent focus:bg-transparent text-[1.5rem] w-[8.5rem] h-[2.5rem] border border-[var(--custom-gray)] transition-colors duration-300 rounded-md flex items-center justify-center font-semibold">
+        <button
+          className="bg-[var(--custom-gray)] hover:bg-transparent active:bg-transparent focus:bg-transparent text-[1.5rem] w-[8.5rem] h-[2.5rem] border border-[var(--custom-gray)] transition-colors duration-300 rounded-md flex items-center justify-center font-semibold"
+          onClick={() => {
+            router.push("/signup");
+          }}
+        >
           SignUp
         </button>
       </div>
@@ -223,6 +234,8 @@ export default function Main() {
   useEffect(() => {
     if (getCookie("token")) {
       router.push("/home");
+    } else {
+      sessionStorage.clear();
     }
   }, []);
   return (

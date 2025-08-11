@@ -56,7 +56,7 @@ export default function PostPage({
           </div>
           <h1 className="text-[2rem] font-bold">Title: {post.title}</h1>
           <p className="text-[1.3rem]">Content: {post.content}</p>
-          <Button className="text-[1.3rem] bg-[var(--custom-purple)] px-[3vw]">
+          <Button className="text-[1.3rem] bg-[var(--custom-blue)] px-[3vw]">
             Like
           </Button>
         </div>

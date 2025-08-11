@@ -65,7 +65,7 @@ export default function Add() {
             className="px-[3vw] text-center placeholder:text-[1.2rem] text-[1.2rem]"
             ref={image}
           />
-          <Button className="bg-[var(--custom-purple)] text-[1.2rem] px-[2vw] border-[var(--custom-purple)] border">
+          <Button className="bg-[var(--custom-blue)] text-[1.2rem] px-[2vw] border-[var(--custom-blue)] border">
             Post
           </Button>
         </form>

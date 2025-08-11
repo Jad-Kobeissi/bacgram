@@ -33,6 +33,7 @@ export default function Nav() {
             className="w-fit h-fit"
             onClick={() => {
               deleteCookie("token");
+              sessionStorage.clear();
               router.push("/");
             }}
           >

@@ -73,7 +73,7 @@ export default function User({ params }: { params: Promise<{ id: string }> }) {
                 {userContext?.user?.id !== user.id &&
                   (followed ? (
                     <Button
-                      className="bg-[var(--custom-purple)] border border-[var(--custom-purple)]"
+                      className="bg-[var(--custom-blue)] border border-[var(--custom-blue)]"
                       onClick={() => {
                         setFollowed(false);
                         setFollowers((prev: any) => prev - 1);
@@ -96,7 +96,7 @@ export default function User({ params }: { params: Promise<{ id: string }> }) {
                     </Button>
                   ) : (
                     <Button
-                      className="bg-[var(--custom-purple)] border border-[var(--custom-purple)]"
+                      className="bg-[var(--custom-blue)] border border-[var(--custom-blue)]"
                       onClick={() => {
                         setFollowed(true);
                         setFollowers((prev: any) => prev + 1);

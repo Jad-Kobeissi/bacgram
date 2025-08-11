@@ -50,7 +50,7 @@ export default function Post({ post }: { post: TPost }) {
       <div className="flex items-center gap-4 mt-4">
         {liked ? (
           <Button
-            className="bg-[var(--custom-purple)] text-white border border-[var(--custom-purple)]"
+            className="bg-[var(--custom-blue)] text-white border border-[var(--custom-blue)]"
             onClick={() => {
               setLiked(false);
               setLikes((prev) => (prev as number) - 1);
@@ -73,7 +73,7 @@ export default function Post({ post }: { post: TPost }) {
           </Button>
         ) : (
           <Button
-            className="bg-[var(--custom-purple)] text-white border border-[var(--custom-purple)]"
+            className="bg-[var(--custom-blue)] text-white border border-[var(--custom-blue)]"
             onClick={() => {
               setLiked(true);
               setLikes((prev) => (prev as number) + 1);

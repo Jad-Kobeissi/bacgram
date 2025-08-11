@@ -25,13 +25,13 @@ export default function Login() {
       initial={{ opacity: 0, y: 100 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="flex [@media(min-width:460px)]:justify-between justify-center px-[2vw] h-screen"
+      className="flex md:justify-between justify-center px-[2vw] h-screen"
     >
-      <div className="hidden justify-start items-center [@media(min-width:460px)]:flex">
+      <div className="hidden justify-start items-center md:flex">
         <h1 className="text-[4rem] font-bold">Welcome Back!</h1>
       </div>
       <form
-        className="flex justify-center flex-col [@media(min-width:460px)]:pr-[5vw]  gap-[3vh] items-center"
+        className="flex justify-center flex-col md:pr-[5vw]  gap-[3vh] items-center"
         onSubmit={(e) => {
           e.preventDefault();
           setLoading(true);
@@ -71,7 +71,7 @@ export default function Login() {
           <Link href="/signup">Dont Have An Account? SignUp Here</Link>
           <span className="w-0 h-0.5 bottom-0 left-0 absolute bg-[#d9d9d9] group-hover:w-full transition-all duration-200"></span>
         </div>
-        <Button className="hover:bg-transparent bg-[var(--custom-purple)] border border-[var(--custom-purple)] active:bg-transparent transition-all duration-200 w-fit px-[2vw]">
+        <Button className="hover:bg-transparent bg-[var(--custom-blue)] border border-[var(--custom-blue)] active:bg-transparent transition-all duration-200 w-fit px-[2vw]">
           LogIn
         </Button>
       </form>

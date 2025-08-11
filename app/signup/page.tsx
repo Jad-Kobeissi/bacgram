@@ -91,7 +91,7 @@ export default function Login() {
           <Link href="/login">Already Have An Account? LogIn Here</Link>
           <span className="w-0 h-0.5 bottom-0 left-0 absolute bg-[#d9d9d9] group-hover:w-full transition-all duration-200"></span>
         </div>
-        <Button className="hover:bg-transparent bg-[var(--custom-purple)] border border-[var(--custom-purple)] active:bg-transparent transition-all duration-200 w-fit px-[2vw]">
+        <Button className="hover:bg-transparent bg-[var(--custom-blue)] border border-[var(--custom-blue)] active:bg-transparent transition-all duration-200 w-fit px-[2vw]">
           SignUp
         </Button>
       </form>
