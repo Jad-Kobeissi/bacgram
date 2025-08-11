@@ -38,3 +38,20 @@ export async function GET(req: Request) {
     return new Response(error, { status: 500 });
   }
 }
+export async function UPDATE(req: Request) {
+  try {
+    const authHeader = req.headers.get("Authorization")?.split(" ")[1];
+
+    if (!authHeader || !verify(authHeader, process.env.SECRET as string))
+      return new Response("Unauthorized", { status: 401 });
+
+    const formData = await req.formData();
+
+    const grade = formData.get("grade");
+    const username = formData.get("username");
+
+    const decoded: any = decode(authHeader);
+  } catch (error: any) {
+    return new Response(error, { status: 500 });
+  }
+}
