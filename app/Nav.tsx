@@ -21,6 +21,10 @@ export default function Nav() {
           <span className="w-0 h-0.5 bg-[#d9d9d9] left-0 bottom-0 absolute group-hover:w-full group-active:w-full transition-all duration-200"></span>
         </div>
         <div className="relative group">
+          <Link href={"/search"}>Search</Link>
+          <span className="w-0 h-0.5 bg-[#d9d9d9] left-0 bottom-0 absolute group-hover:w-full transition-all duration-200 group-active:w-full"></span>
+        </div>
+        <div className="relative group">
           <Link href={"/add"}>Add</Link>
           <span className="w-0 h-0.5 bg-[#d9d9d9] left-0 bottom-0 absolute group-hover:w-full transition-all group-active:w-full duration-200"></span>
         </div>

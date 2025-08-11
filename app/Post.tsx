@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Post as TPost } from "./types";
 import { UserContext } from "./contexts/UserContext";
 import axios from "axios";
@@ -13,8 +13,11 @@ export default function Post({ post }: { post: TPost }) {
 
   const [likes, setLikes] = useState(post.likes);
   const [liked, setLiked] = useState(
-    user.likedPosts?.some((p) => p.id === post.id)
+    post.likedUsers.some((u) => user.id == user.id) ?? false
   );
+  useEffect(() => {
+    console.log(user.likedPosts);
+  }, []);
   const router = useRouter();
   return (
     <div
@@ -52,7 +55,8 @@ export default function Post({ post }: { post: TPost }) {
         {liked ? (
           <Button
             className="bg-[var(--custom-blue)] text-white border border-[var(--custom-blue)]"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               setLiked(false);
               setLikes((prev) => (prev as number) - 1);
               axios
@@ -75,7 +79,8 @@ export default function Post({ post }: { post: TPost }) {
         ) : (
           <Button
             className="bg-[var(--custom-blue)] text-white border border-[var(--custom-blue)]"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               setLiked(true);
               setLikes((prev) => (prev as number) + 1);
               axios
