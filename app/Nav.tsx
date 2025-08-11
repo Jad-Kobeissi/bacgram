@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 export default function Nav() {
   const router = useRouter();
   return (
-    <nav className="flex items-center justify-between p-4 fixed w-screen top-0 z-50]">
+    <nav className="flex items-center justify-between p-4 fixed w-screen top-0 z-50">
       <Button
         variant={"ghost"}
         className="text-[1.3rem] font-semibold"
@@ -15,7 +15,7 @@ export default function Nav() {
       >
         Bacgram
       </Button>
-      <div className="flex items-center gap-[3vw]">
+      <div className="flex items-center md:gap-[3vw] gap-[2vw]">
         <div className="relative group">
           <Link href={"/home"}>Home</Link>
           <span className="w-0 h-0.5 bg-[#d9d9d9] left-0 bottom-0 absolute group-hover:w-full group-active:w-full transition-all duration-200"></span>

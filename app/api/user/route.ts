@@ -1,4 +1,4 @@
-import { verify } from "jsonwebtoken";
+import { decode, verify } from "jsonwebtoken";
 import { prisma } from "../init";
 
 export async function GET(req: Request) {
@@ -14,11 +14,17 @@ export async function GET(req: Request) {
 
     if (!q) return new Response("Please enter a username", { status: 400 });
 
+    const decoded: any = decode(authHeader);
     const skip = (page - 1) * 5;
     const posts = await prisma.user.findMany({
       where: {
         username: {
           contains: q,
+        },
+        id: {
+          not: {
+            equals: decoded.id,
+          },
         },
       },
       take: 5,
