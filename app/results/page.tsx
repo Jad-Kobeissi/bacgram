@@ -1,6 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Post, User } from "../types";
 import axios from "axios";
 import { getCookie } from "cookies-next";
@@ -9,7 +9,7 @@ import Loading from "../Loading";
 import Error from "../Error";
 import Nav from "../Nav";
 
-export default function Search() {
+function GetResults() {
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState("");
   const [page, setPage] = useState(1);
@@ -73,5 +73,12 @@ export default function Search() {
       </InfiniteScroll>
       {error && <Error className="text-center">{error}</Error>}
     </>
+  );
+}
+export default function Results() {
+  return (
+    <Suspense fallback={<Loading className="h-screen" />}>
+      <GetResults />
+    </Suspense>
   );
 }

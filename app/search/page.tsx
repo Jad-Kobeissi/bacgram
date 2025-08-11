@@ -11,20 +11,18 @@ export default function Search() {
   return (
     <>
       <Nav />
-      <Suspense>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            router.push(`/results/?q=${user.current?.value}&page=1`);
-          }}
-          className="flex items-center justify-center flex-col h-screen gap-[3vh]"
-        >
-          <Input ref={user} placeholder="Username" className="w-fit" />
-          <Button className="bg-[var(--custom-blue)] border border-[var(--custom-blue)] transition-all duration-300">
-            Search
-          </Button>
-        </form>
-      </Suspense>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          router.push(`/results/?q=${user.current?.value}&page=1`);
+        }}
+        className="flex items-center justify-center flex-col h-screen gap-[3vh]"
+      >
+        <Input ref={user} placeholder="Username" className="w-fit" />
+        <Button className="bg-[var(--custom-blue)] border border-[var(--custom-blue)] transition-all duration-300">
+          Search
+        </Button>
+      </form>
     </>
   );
 }
