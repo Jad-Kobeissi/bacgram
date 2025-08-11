@@ -117,7 +117,7 @@ function Features() {
   });
   return (
     <div
-      className="bg-[#1f1f1f] pt-[10vh] text-[var(--custom-white)] h-screen w-screen"
+      className="bg-[#1f1f1f] pt-[10vh] text-[var(--custom-white)] min-h-screen h-fit py-[10vh] w-screen"
       id="features"
     >
       <h1 className="text-center text-[3.5rem] font-bold">Features</h1>
