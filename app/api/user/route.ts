@@ -7,7 +7,7 @@ export async function GET(req: Request) {
     const authHeader = req.headers.get("Authorization")?.split(" ")[1];
 
     if (!authHeader || !verify(authHeader, process.env.SECRET as string))
-      return new Response("Unauthorized", { status: 401 });
+      return new Response("Unauthorized ", { status: 401 });
 
     const { searchParams } = new URL(req.url);
     const q = searchParams.get("q");
@@ -15,8 +15,8 @@ export async function GET(req: Request) {
 
     const decoded: any = decode(authHeader);
     const skip = (page - 1) * 5;
-    let user;
-    user = await prisma.user.findMany({
+    let users;
+    users = await prisma.user.findMany({
       where: {
         username: {
           contains: q as string,
@@ -30,12 +30,10 @@ export async function GET(req: Request) {
       take: 5,
       skip: skip,
     });
+    if (users.length == 0)
+      return new Response("No users found", { status: 404 });
 
-    if (user.length == 0) {
-      user = await prisma.user.findMany();
-    }
-
-    return Response.json(user);
+    return Response.json(users);
   } catch (error: any) {
     return new Response(error, { status: 500 });
   }
