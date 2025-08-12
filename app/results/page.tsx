@@ -31,7 +31,7 @@ function GetResults() {
           const filtered = res.data.filter(
             (user: User) => !prev.includes(user)
           );
-          return filtered;
+          return [...prev, ...filtered];
         });
         setPage((prev) => prev + 1);
       })

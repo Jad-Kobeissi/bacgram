@@ -1,5 +1,6 @@
 "use client";
 import { useContext, useEffect, useRef, useState } from "react";
+import { motion } from "motion/react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { UserContext } from "../contexts/UserContext";
 import { Post as TPost } from "../types";
@@ -52,6 +53,9 @@ export default function Profile() {
   useEffect(() => {
     fetchPosts();
   }, []);
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
   return (
     <>
       <Nav />
@@ -90,12 +94,20 @@ export default function Profile() {
           </div>
         </div>
         <div className="text-center flex gap-4">
-          <h1 className="text-[1.2rem]">
+          <motion.h1
+            className="text-[1.2rem] hover:contrast-[0.25] active:contrast-[0.25]"
+            onClick={() => router.push(`/followers/${user?.id}`)}
+            whileTap={{ scale: 0.5 }}
+          >
             Followers: {user?.followers?.length}
-          </h1>
-          <h1 className="text-[1.2rem]">
+          </motion.h1>
+          <motion.h1
+            className="text-[1.2rem] hover:contrast-[.25] active:contrast-[.25]"
+            onClick={() => router.push(`/following/${user?.id}`)}
+            whileTap={{ scale: 0.9 }}
+          >
             Following: {user?.following?.length}
-          </h1>
+          </motion.h1>
         </div>
       </div>
 

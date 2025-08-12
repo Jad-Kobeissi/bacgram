@@ -34,10 +34,10 @@ export default function Grade({
       .then((res) => {
         setPosts((prev) => {
           const filtered = res.data.filter(
-            (post: TPost) => !prev.includes(post)
+            (post: TPost) => !prev.some((p) => p.id == post.id)
           );
 
-          return filtered;
+          return [...prev, ...filtered];
         });
         setPage((prev) => prev + 1);
       })
