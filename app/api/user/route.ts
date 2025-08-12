@@ -13,14 +13,13 @@ export async function GET(req: Request) {
     const q = searchParams.get("q");
     const page = parseInt(searchParams.get("page") as string) || 1;
 
-    if (!q) return new Response("Please enter a username", { status: 400 });
-
     const decoded: any = decode(authHeader);
     const skip = (page - 1) * 5;
-    const posts = await prisma.user.findMany({
+    let user;
+    user = await prisma.user.findMany({
       where: {
         username: {
-          contains: q,
+          contains: q as string,
         },
         id: {
           not: {
@@ -32,9 +31,11 @@ export async function GET(req: Request) {
       skip: skip,
     });
 
-    if (!posts.length) return new Response("User not found", { status: 404 });
+    if (user.length == 0) {
+      user = await prisma.user.findMany();
+    }
 
-    return Response.json(posts);
+    return Response.json(user);
   } catch (error: any) {
     return new Response(error, { status: 500 });
   }
