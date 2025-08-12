@@ -155,7 +155,7 @@ export default function Profile() {
         className="min-h-screen min-w-screen bg-transparent backdrop-blur-md"
       >
         <div className="flex items-center justify-center flex-col h-screen">
-          <div className="bg-[#121212] px-[7rem] py-[4rem] rounded flex flex-col gap-[1rem]">
+          <div className="bg-[#121212] px-[7rem] py-[4rem] rounded-md flex flex-col gap-[1rem]">
             <h1 className="text-[2rem] text-white">Edit Your Profile</h1>
             <form
               className="flex flex-col items-center justify-center gap-[1rem]"
@@ -196,9 +196,21 @@ export default function Profile() {
                 className="text-white"
                 max={12}
               />
-              <Button className="bg-[var(--custom-blue)] border border-[var(--custom-blue)] transition-all duration-200 px-[3vw]">
-                Edit
-              </Button>
+              <div className="flex items-cemter justify-center gap-[2rem]">
+                <Button className="bg-[var(--custom-blue)] border border-[var(--custom-blue)] transition-all duration-200 px-[3rem]">
+                  Edit
+                </Button>
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    editModalRef.current?.close();
+                  }}
+                  variant={"secondary"}
+                  className="px-[3rem]"
+                >
+                  Close
+                </Button>
+              </div>
             </form>
           </div>
         </div>
