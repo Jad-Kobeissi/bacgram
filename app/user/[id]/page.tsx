@@ -1,6 +1,7 @@
 "use client";
 import { UserContext } from "@/app/contexts/UserContext";
 import Error from "@/app/Error";
+import { motion } from "motion/react";
 import Loading from "@/app/Loading";
 import Nav from "@/app/Nav";
 import Post from "@/app/Post";
@@ -9,13 +10,15 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import React, { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 export default function User({ params }: { params: Promise<{ id: string }> }) {
   const [user, setUser] = useState<TUser | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const userContext = useContext(UserContext);
   const [loading, setLoading] = useState<boolean>(false);
   const [followed, setFollowed] = useState<boolean>(false);
   const [followers, setFollowers] = useState(0);
-  const userContext = useContext(UserContext);
+  const router = useRouter();
   const context = React.use(params);
 
   const fetchUser = async () => {
@@ -43,13 +46,11 @@ export default function User({ params }: { params: Promise<{ id: string }> }) {
     fetchUser();
   }, []);
   useEffect(() => {
-    setFollowed(
-      user?.followers.some(
-        (follower) => follower.id === userContext?.user?.id
-      ) ?? false
-    );
-    setFollowers(user?.followers.length ?? 0);
-  }, [userContext?.user?.id, user?.id]);
+    if (!userContext?.user || !user?.id) return;
+    console.log(userContext.user.following);
+    setFollowed(user.followers.some((u) => u.id == userContext.user?.id));
+    setFollowers(user.followers.length);
+  }, [user, userContext?.user]);
   return (
     <>
       <Nav />
@@ -120,13 +121,21 @@ export default function User({ params }: { params: Promise<{ id: string }> }) {
                   ))}
               </div>
             </div>
-            <div className="mt-4 flex justify-center gap-2">
-              <h1 className="text-center text-[1.2rem]">
+            <div className="text-center flex gap-4 justify-center">
+              <motion.h1
+                className="text-[1.2rem] hover:contrast-[0.25] active:contrast-[0.25]"
+                onClick={() => router.push(`/followers/${user?.id}`)}
+                whileTap={{ scale: 0.9 }}
+              >
                 Followers: {followers}
-              </h1>
-              <h1 className="text-center text-[1.2rem]">
-                Following: {user.following.length}
-              </h1>
+              </motion.h1>
+              <motion.h1
+                className="text-[1.2rem] hover:contrast-[.25] active:contrast-[.25]"
+                onClick={() => router.push(`/following/${user?.id}`)}
+                whileTap={{ scale: 0.9 }}
+              >
+                Following: {user?.following?.length}
+              </motion.h1>
             </div>
             <div className="flex flex-col items-center gap-4 mt-8">
               {user?.posts && user.posts.length > 0 ? (

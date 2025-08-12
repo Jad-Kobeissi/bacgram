@@ -97,7 +97,7 @@ export default function Profile() {
           <motion.h1
             className="text-[1.2rem] hover:contrast-[0.25] active:contrast-[0.25]"
             onClick={() => router.push(`/followers/${user?.id}`)}
-            whileTap={{ scale: 0.5 }}
+            whileTap={{ scale: 0.9 }}
           >
             Followers: {user?.followers?.length}
           </motion.h1>

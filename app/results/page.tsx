@@ -29,7 +29,7 @@ function GetResults() {
       .then((res) => {
         setUsers((prev) => {
           const filtered = res.data.filter(
-            (user: User) => !prev.includes(user)
+            (user: User) => !prev.some((u) => u.id == user.id)
           );
           return [...prev, ...filtered];
         });
