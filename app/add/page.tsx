@@ -6,12 +6,14 @@ import { useRef, useState } from "react";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import Loading from "../Loading";
+import Error from "../Error";
 
 export default function Add() {
   const title = useRef<HTMLInputElement>(null);
   const content = useRef<HTMLInputElement>(null);
   const image = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   return loading ? (
     <Loading className="h-screen" />
   ) : (
@@ -26,6 +28,7 @@ export default function Add() {
           onSubmit={(e) => {
             e.preventDefault();
             setLoading(true);
+            setError("");
             const formData = new FormData();
             formData.append("title", title.current?.value as string);
             formData.append("content", content.current?.value as string);
@@ -42,12 +45,13 @@ export default function Add() {
                 alert("Post created successfully!");
               })
               .catch((err) => {
-                console.error(err);
+                setError(err.response.data);
               })
               .finally(() => setLoading(false));
           }}
         >
           <h1 className="text-[2.5rem] font-semibold">Post</h1>
+          {error && <Error>{error}</Error>}
           <Input
             placeholder="Title"
             className="px-[3vw] text-center placeholder:text-[1.2rem] text-[1.2rem]"
