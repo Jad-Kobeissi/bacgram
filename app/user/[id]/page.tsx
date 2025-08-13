@@ -155,6 +155,14 @@ export default function User({ params }: { params: Promise<{ id: string }> }) {
                               },
                             }
                           )
+                          .then(() => {
+                            if (
+                              user.following.some(
+                                (u) => u.id == userContext?.user?.id
+                              )
+                            )
+                              setFriends(true);
+                          })
                           .catch((err) => {
                             setError(err.response.data);
                           });

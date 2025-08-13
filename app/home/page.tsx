@@ -60,6 +60,14 @@ export default function Home() {
         >
           View Your Grade's Wall
         </Button>
+        <Button
+          className="bg-[var(--custom-blue)] border border-[var(--custom-blue)]"
+          onClick={() => {
+            router.push(`/friends`);
+          }}
+        >
+          View Your Friends' New Posts
+        </Button>
       </div>
       <InfiniteScroll
         next={fetchPosts}
