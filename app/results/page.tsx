@@ -1,6 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useContext, useEffect, useState } from "react";
 import { Post, User } from "../types";
 import axios from "axios";
 import { getCookie } from "cookies-next";
@@ -8,6 +8,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "../Loading";
 import Error from "../Error";
 import Nav from "../Nav";
+import { UserContext } from "../contexts/UserContext";
 
 function GetResults() {
   const [users, setUsers] = useState<User[]>([]);
@@ -17,7 +18,7 @@ function GetResults() {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const q = params.get("q");
-
+  const userContext = useContext(UserContext);
   const fetchUsers = () => {
     setUsers([]);
     axios
@@ -68,6 +69,10 @@ function GetResults() {
               className="w-[4rem] h-[4rem] rounded-full"
             />
             <h1 className="text-[1.3rem]">{user.username}</h1>
+            {user.followers.some((u) => u.id == userContext?.user?.id) &&
+              user.following.some((u) => u.id == userContext?.user?.id) && (
+                <h1 className="contrast-[.25]">Friends</h1>
+              )}
           </div>
         ))}
       </InfiniteScroll>

@@ -18,6 +18,7 @@ export default function User({ params }: { params: Promise<{ id: string }> }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [followed, setFollowed] = useState<boolean>(false);
   const [followers, setFollowers] = useState(0);
+  const [friends, setFriends] = useState(false);
   const router = useRouter();
   const context = React.use(params);
 
@@ -50,6 +51,12 @@ export default function User({ params }: { params: Promise<{ id: string }> }) {
     console.log(userContext.user.following);
     setFollowed(user.followers.some((u) => u.id == userContext.user?.id));
     setFollowers(user.followers.length);
+
+    if (
+      user.followers.some((u) => u.id == userContext.user?.id) &&
+      user.following.some((u) => u.id == userContext.user?.id)
+    )
+      setFriends(true);
   }, [user, userContext?.user]);
   return (
     <>
@@ -71,6 +78,7 @@ export default function User({ params }: { params: Promise<{ id: string }> }) {
                 <h1 className="text-[1.5rem] font-bold">
                   Username: {user?.username}
                 </h1>
+                {friends && <h1 className="contrast-[.25]">Friends</h1>}
                 {userContext?.user?.id !== user.id &&
                   (followed ? (
                     <Button
@@ -88,6 +96,9 @@ export default function User({ params }: { params: Promise<{ id: string }> }) {
                               },
                             }
                           )
+                          .then(() => {
+                            setFriends(false);
+                          })
                           .catch((err) => {
                             setError(err.response.data);
                           });
@@ -113,6 +124,14 @@ export default function User({ params }: { params: Promise<{ id: string }> }) {
                               },
                             }
                           )
+                          .then(() => {
+                            if (
+                              user.following.some(
+                                (u) => u.id == userContext?.user?.id
+                              )
+                            )
+                              setFriends(true);
+                          })
                           .catch((err) => {
                             setError(err.response.data);
                           });

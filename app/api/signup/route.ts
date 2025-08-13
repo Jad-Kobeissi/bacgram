@@ -3,6 +3,7 @@ import { isEmpty } from "../isEmpty";
 import { prisma, storage } from "../init";
 import { sign } from "jsonwebtoken";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { userAgent } from "next/server";
 
 export async function POST(req: Request) {
   try {

@@ -29,6 +29,10 @@ export async function GET(req: Request) {
       },
       take: 5,
       skip: skip,
+      include: {
+        followers: true,
+        following: true,
+      },
     });
     if (users.length == 0)
       return new Response("No users found", { status: 404 });
@@ -72,6 +76,13 @@ export async function PUT(req: Request) {
       data: {
         grade: grade != "" ? parseInt(grade as string) : user?.grade,
         username: username != "" ? (username as string) : user?.username,
+      },
+      include: {
+        followers: true,
+        following: true,
+        likedPosts: true,
+        posts: true,
+        viewedPosts: true,
       },
     });
 
