@@ -95,6 +95,31 @@ export default function User({ params }: { params: Promise<{ id: string }> }) {
                     >
                       Unfollow
                     </Button>
+                  ) : user?.following.some(
+                      (u) => u.id == userContext?.user?.id
+                    ) ? (
+                    <Button
+                      className="bg-[var(--custom-blue)] border border-[var(--custom-blue)]"
+                      onClick={() => {
+                        setFollowed(true);
+                        setFollowers((prev: any) => prev + 1);
+                        axios
+                          .post(
+                            `/api/follow/${user.id}`,
+                            {},
+                            {
+                              headers: {
+                                Authorization: `Bearer ${getCookie("token")}`,
+                              },
+                            }
+                          )
+                          .catch((err) => {
+                            setError(err.response.data);
+                          });
+                      }}
+                    >
+                      Follow Back
+                    </Button>
                   ) : (
                     <Button
                       className="bg-[var(--custom-blue)] border border-[var(--custom-blue)]"
