@@ -6,6 +6,10 @@
 html {
   scroll-behavior: smooth;
 }
+button:active {
+  background: transparent;
+  transition: all 200ms;
+}
 :root {
   --custom-purple: #4f2dfa;
   --custom-white: #d9d9d9;
