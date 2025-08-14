@@ -1,4 +1,5 @@
 import { Suspense, useContext, useEffect, useRef, useState } from "react";
+import TimeAgo from "react-timeago";
 import { Post as TPost } from "./types";
 import { UserContext } from "./contexts/UserContext";
 import axios from "axios";
@@ -162,6 +163,9 @@ export default function Post({ post }: { post: TPost }) {
               </div>
             </dialog>
           </div>
+          <h1 className="text-[0.7rem] mt-[.5rem] contrast-[.25]">
+            <TimeAgo date={post.createdAt} />
+          </h1>
         </div>
       )}
     </Suspense>
