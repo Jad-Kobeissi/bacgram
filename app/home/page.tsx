@@ -51,7 +51,7 @@ export default function Home() {
       <h1 className="capitalize text-[2.5rem] font-bold text-center mt-[20vh]">
         Welcome {user?.username}!
       </h1>
-      <div className="flex justify-center mb-[10vh] mt-[5vh]">
+      <div className="flex justify-center mb-[10vh] mt-[5vh] flex-col gap-[1rem] md:flex-row  ">
         <Button
           className="bg-[var(--custom-blue)] border border-[var(--custom-blue)]"
           onClick={() => {
