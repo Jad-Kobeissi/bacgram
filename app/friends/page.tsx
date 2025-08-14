@@ -8,6 +8,8 @@ import Loading from "../Loading";
 import Error from "../Error";
 import Nav from "../Nav";
 import Post from "../Post";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function Friends() {
   const [posts, setPosts] = useState<TPost[]>([]);
@@ -44,9 +46,20 @@ export default function Friends() {
   useEffect(() => {
     fetchPosts();
   }, []);
+  const router = useRouter();
   return (
     <>
       <Nav />
+      <div className="flex items-center justify-center mt-[8rem]">
+        <Button
+          className="bg-[var(--custom-blue)] border border-[var(--custom-blue)] w-fit"
+          onClick={() => {
+            router.push(`/home`);
+          }}
+        >
+          View All Posts
+        </Button>
+      </div>
       <InfiniteScroll
         dataLength={posts.length}
         hasMore={hasMore}
@@ -58,7 +71,7 @@ export default function Friends() {
           <Post post={post} key={post.id as number} />
         ))}
       </InfiniteScroll>
-      {error && <Error className="text-center mt-[20vh]">{error}</Error>}
+      {error && <Error className="text-center">{error}</Error>}
     </>
   );
 }

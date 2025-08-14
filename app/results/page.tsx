@@ -9,6 +9,7 @@ import Loading from "../Loading";
 import Error from "../Error";
 import Nav from "../Nav";
 import { UserContext } from "../contexts/UserContext";
+import { Button } from "@/components/ui/button";
 
 function GetResults() {
   const [users, setUsers] = useState<User[]>([]);
@@ -48,12 +49,22 @@ function GetResults() {
   return (
     <>
       <Nav />
+      <div className="flex items-center justify-center mt-[8rem]">
+        <Button
+          className="bg-[var(--custom-blue)] border border-[var(--custom-blue)] w-fit"
+          onClick={() => {
+            router.push(`/home`);
+          }}
+        >
+          View All Posts
+        </Button>
+      </div>
       <InfiniteScroll
         next={fetchUsers}
         hasMore={hasMore}
         dataLength={users.length}
         loader={<Loading />}
-        className="flex flex-col gap-[5vh] items-center mt-[30vh]"
+        className="flex flex-col gap-[5vh] items-center mt-[10vh]"
       >
         {users.map((user) => (
           <div
