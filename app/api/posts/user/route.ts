@@ -26,6 +26,9 @@ export async function GET(req: Request) {
       },
       take: 5,
       skip: skip,
+      orderBy: {
+        createdAt: "desc",
+      },
     });
     if (posts.length == 0)
       return new Response("No Posts Found", { status: 404 });

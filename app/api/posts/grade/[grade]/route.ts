@@ -39,6 +39,9 @@ export async function GET(
         viewedUsers: true,
         likedUsers: true,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
       take: 5,
       skip: skip,
     });

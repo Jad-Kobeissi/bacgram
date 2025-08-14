@@ -35,6 +35,9 @@ export async function GET(req: Request) {
           },
         },
       },
+      orderBy: {
+        createdAt: "desc",
+      },
       include: {
         author: true,
         likedUsers: true,
