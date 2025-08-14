@@ -16,12 +16,11 @@ export default function Post({ post }: { post: TPost }) {
   const [likes, setLikes] = useState(post.likes);
   const [liked, setLiked] = useState(false);
   useEffect(() => {
-    console.log(user.likedPosts);
-  }, []);
-  useEffect(() => {
-    if (!post.likedUsers || !user.id) return;
-    setLiked(post.likedUsers.some((u) => u.id == user.id) ?? false);
-  }, [post.likedUsers, user.id]);
+    console.log(post);
+    if (!post.likedUsers || !user) return;
+    console.log("Work 2");
+    setLiked(post.likedUsers.some((u) => u.id == user.id));
+  }, [post.likedUsers, user]);
   const router = useRouter();
   return (
     <Suspense fallback={<Loading />}>

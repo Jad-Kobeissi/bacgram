@@ -48,15 +48,16 @@ export default function User({ params }: { params: Promise<{ id: string }> }) {
   }, []);
   useEffect(() => {
     if (!userContext?.user || !user?.id) return;
-    console.log(userContext.user.following);
+    console.log(userContext.user);
     setFollowed(user.followers.some((u) => u.id == userContext.user?.id));
     setFollowers(user.followers.length);
 
     if (
       user.followers.some((u) => u.id == userContext.user?.id) &&
       user.following.some((u) => u.id == userContext.user?.id)
-    )
+    ) {
       setFriends(true);
+    }
   }, [user, userContext?.user]);
   return (
     <>

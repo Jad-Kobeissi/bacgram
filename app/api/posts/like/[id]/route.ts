@@ -44,6 +44,18 @@ export async function POST(
       },
     });
 
+    await prisma.user.update({
+      where: {
+        id: decoded.id,
+      },
+      data: {
+        likedPosts: {
+          connect: {
+            id: post.id,
+          },
+        },
+      },
+    });
     return Response.json({
       message: "Post liked successfully",
     });

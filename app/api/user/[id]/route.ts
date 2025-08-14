@@ -23,6 +23,8 @@ export async function GET(
         posts: {
           include: {
             author: true,
+            likedUsers: true,
+            viewedUsers: true,
           },
         },
         followers: true,
