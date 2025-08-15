@@ -53,10 +53,11 @@ export async function PUT(req: Request) {
 
     const grade = formData.get("grade");
     const username = formData.get("username");
+    const bio = formData.get("bio");
 
     const decoded: any = decode(authHeader);
 
-    if (grade == "" && username == "")
+    if (grade == "" && username == "" && bio == "")
       return new Response("Please fill out a field", { status: 400 });
 
     const user = await prisma.user.findUnique({ where: { id: decoded.id } });
@@ -76,6 +77,7 @@ export async function PUT(req: Request) {
       data: {
         grade: grade != "" ? parseInt(grade as string) : user?.grade,
         username: username != "" ? (username as string) : user?.username,
+        bio: bio != "" ? (bio as string) : user?.bio,
       },
       include: {
         followers: true,

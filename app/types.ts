@@ -2,6 +2,7 @@ export interface User {
   id: Number;
   username: String;
   password: String;
+  bio?: String;
   posts: Post[];
   viewedPosts: Post[];
   profilePicture: String;

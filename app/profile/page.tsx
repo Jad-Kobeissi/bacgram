@@ -23,6 +23,7 @@ export default function Profile() {
   const [hasMore, setHasMore] = useState(true);
   const username = useRef<HTMLInputElement>(null);
   const grade = useRef<HTMLInputElement>(null);
+  const bio = useRef<HTMLInputElement>(null);
   const modalRef = useRef<HTMLDialogElement>(null);
   const editModalRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
@@ -61,19 +62,24 @@ export default function Profile() {
       <Nav />
       <div className="mt-[30vh] mb-[5vh] flex flex-col items-center justify-center gap-4">
         <div className="capitalize text-[2.5rem] font-bold text-center flex md:flex-row flex-col items-center justify-center gap-4">
-          <div className="flex items-center gap-[1rem]">
-            <img
-              src={user?.profilePicture as string}
-              alt="Profile picture"
-              className="md:w-[5vw] md:h-[5vw] h-[10vw] w-[10vw] rounded-full"
-            />{" "}
-            <h1 className="flex items-center gap-[.5rem]">
-              {user?.username}
+          <div>
+            <div className="flex items-center gap-[1rem]">
+              <img
+                src={user?.profilePicture as string}
+                alt="Profile picture"
+                className="md:w-[5vw] md:h-[5vw] h-[10vw] w-[10vw] rounded-full"
+              />{" "}
+              <h1 className="flex items-center gap-[.5rem]">
+                {user?.username}
 
-              <p className="text-white text-[1.3rem] contrast-[.25]">
-                is in grade {user?.grade as number}
-              </p>
-            </h1>
+                <p className="text-white text-[1.3rem] contrast-[.25]">
+                  is in grade {user?.grade as number}
+                </p>
+              </h1>
+            </div>
+            {user?.bio?.trim() != "" ? (
+              <p className="text-[1rem] contrast-[.25]">{user?.bio}</p>
+            ) : null}
           </div>
           <div className="gap-[2rem] flex flex-col">
             <Button
@@ -177,7 +183,16 @@ export default function Profile() {
 
                 formData.append("username", username.current?.value as string);
                 formData.append("grade", grade.current?.value as string);
+                formData.append("bio", bio.current?.value as string);
 
+                if (
+                  username.current?.value == user?.username &&
+                  grade.current?.value == user?.grade &&
+                  bio.current?.value == user?.bio
+                ) {
+                  alert("Please Change a value");
+                  return;
+                }
                 axios
                   .put("/api/user", formData, {
                     headers: {
@@ -200,16 +215,28 @@ export default function Profile() {
                 placeholder="Username"
                 ref={username}
                 className="text-white"
+                defaultValue={user?.username as string}
+              />
+              <Input
+                type="text"
+                placeholder="Bio"
+                ref={bio}
+                className="text-white"
+                defaultValue={user?.bio?.trim() as string}
               />
               <Input
                 type="number"
                 placeholder="Grade"
+                defaultValue={user?.grade as number}
                 ref={grade}
                 className="text-white"
                 max={12}
               />
               <div className="flex items-cemter justify-center gap-[2rem]">
-                <Button className="bg-[var(--custom-blue)] border border-[var(--custom-blue)] transition-all duration-200 px-[3rem]">
+                <Button
+                  className="bg-[var(--custom-blue)] border border-[var(--custom-blue)] transition-all duration-200 px-[3rem]"
+                  type="submit"
+                >
                   Edit
                 </Button>
                 <Button

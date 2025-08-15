@@ -13,7 +13,9 @@ import Profile from "./user-solid-full";
 function Nav() {
   return (
     <nav className="px-[2rem] py-[.6rem] flex items-center justify-between h-fit gap-[3vw] fixed w-screen text-[var(--custom-white)]">
-      <button className="text-[1.5rem] font-bold">Bacgram</button>
+      <button className="md:text-[1.5rem] text-[1rem] font-bold">
+        Bacgram
+      </button>
       <div className="items-center h-full flex md:gap-[3rem] gap-[2rem]">
         <div className="relative group">
           <Link href={"#home"} className="text-[1.3rem]">
