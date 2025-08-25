@@ -216,6 +216,7 @@ export default function Profile() {
                 onChange={(e) => setUsername(e.target.value)}
                 className="text-white"
                 defaultValue={user?.username as string}
+                maxLength={20}
               />
               <Input
                 type="text"
@@ -223,6 +224,7 @@ export default function Profile() {
                 onChange={(e) => setBio(e.target.value)}
                 className="text-white"
                 defaultValue={user?.bio?.trim() as string}
+                maxLength={100}
               />
               <Input
                 type="number"
