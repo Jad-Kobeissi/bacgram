@@ -77,7 +77,7 @@ export async function PUT(req: Request) {
       data: {
         grade: grade != "" ? parseInt(grade as string) : user?.grade,
         username: username != "" ? (username as string) : user?.username,
-        bio: bio != "" ? (bio as string) : user?.bio,
+        bio: bio as string
       },
       include: {
         followers: true,
