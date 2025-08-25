@@ -21,9 +21,9 @@ export default function Profile() {
   const [page, setPage] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
-  const username = useRef<HTMLInputElement>(null);
-  const grade = useRef<HTMLInputElement>(null);
-  const bio = useRef<HTMLInputElement>(null);
+  const [username, setUsername] = useState("")
+  const [grade, setGrade] = useState<Number>(0)
+  const [bio, setBio] = useState("")
   const modalRef = useRef<HTMLDialogElement>(null);
   const editModalRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
@@ -181,14 +181,14 @@ export default function Profile() {
                 e.preventDefault();
                 const formData = new FormData();
 
-                formData.append("username", username.current?.value as string);
-                formData.append("grade", grade.current?.value as string);
-                formData.append("bio", bio.current?.value as string);
+                formData.append("username", username as string);
+                formData.append("grade", grade as any);
+                formData.append("bio", bio as string);
 
                 if (
-                  username.current?.value == user?.username &&
-                  grade.current?.value == user?.grade &&
-                  bio.current?.value == user?.bio
+                  username == user?.username &&
+                  grade == user?.grade &&
+                  bio == user?.bio
                 ) {
                   alert("Please Change a value");
                   return;
@@ -213,14 +213,14 @@ export default function Profile() {
               <Input
                 type="text"
                 placeholder="Username"
-                ref={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="text-white"
                 defaultValue={user?.username as string}
               />
               <Input
                 type="text"
                 placeholder="Bio"
-                ref={bio}
+                onChange={(e) => setBio(e.target.value)}
                 className="text-white"
                 defaultValue={user?.bio?.trim() as string}
               />
@@ -228,7 +228,7 @@ export default function Profile() {
                 type="number"
                 placeholder="Grade"
                 defaultValue={user?.grade as number}
-                ref={grade}
+                onChange={(e) => setGrade(e.target.value as any)}
                 className="text-white"
                 max={12}
               />
