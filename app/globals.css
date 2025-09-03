@@ -54,7 +54,6 @@ button:active {
 body {
   color: var(--custom-white);
   background-color: #121212;
-  overflow-x: hidden;
 }
 @theme {
   --breakpoint-md: 531px;
