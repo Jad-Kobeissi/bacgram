@@ -21,9 +21,9 @@ export default function Profile() {
   const [page, setPage] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
-  const [username, setUsername] = useState("")
-  const [grade, setGrade] = useState<Number>(0)
-  const [bio, setBio] = useState("")
+  const [username, setUsername] = useState("");
+  const [grade, setGrade] = useState<Number>(0);
+  const [bio, setBio] = useState("");
   const modalRef = useRef<HTMLDialogElement>(null);
   const editModalRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
@@ -150,7 +150,7 @@ export default function Profile() {
                       },
                     })
                     .then(() => {
-                      alert("Post deleted");
+                      alert("User deleted");
                       sessionStorage.clear();
                       deleteCookie("token");
                       localStorage.clear();
@@ -210,7 +210,9 @@ export default function Profile() {
                   });
               }}
             >
-              {error && <Error className="text-center text-red-500">{error}</Error>}
+              {error && (
+                <Error className="text-center text-red-500">{error}</Error>
+              )}
               <Input
                 type="text"
                 placeholder="Username"
