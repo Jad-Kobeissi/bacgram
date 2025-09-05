@@ -233,6 +233,7 @@ export default function Profile() {
                 defaultValue={user?.grade as number}
                 onChange={(e) => setGrade(e.target.value as any)}
                 className="text-white"
+                min={1}
                 max={12}
               />
               <div className="flex items-cemter justify-center gap-[2rem]">
