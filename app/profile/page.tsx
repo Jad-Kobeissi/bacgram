@@ -210,6 +210,7 @@ export default function Profile() {
                   });
               }}
             >
+              {error && <Error className="text-center text-red-500">{error}</Error>}
               <Input
                 type="text"
                 placeholder="Username"
