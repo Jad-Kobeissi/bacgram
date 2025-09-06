@@ -13,7 +13,6 @@ import Link from "next/link";
 export default function Login() {
   const username = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
-  const profilePicture = useRef<HTMLInputElement>(null);
   const grade = useRef<HTMLInputElement>(null);
   const { setUser } = useContext(UserContext)!;
   const [loading, setLoading] = useState(false);
@@ -35,10 +34,6 @@ export default function Login() {
           const formData = new FormData();
           formData.append("username", username.current?.value as string);
           formData.append("password", password.current?.value as string);
-          formData.append(
-            "profilePicture",
-            profilePicture.current?.files![0] as File
-          );
           formData.append("grade", grade.current?.value as string);
           axios
             .post("/api/signup", formData)
@@ -76,15 +71,6 @@ export default function Login() {
           ref={grade}
           min={1}
           max={12}
-          required
-        />
-
-        <Input
-          type="file"
-          accept="image/*"
-          className="px-[3vw] text-center"
-          name="profilePicture"
-          ref={profilePicture}
           required
         />
         <div className="group relative">

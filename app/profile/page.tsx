@@ -24,6 +24,7 @@ export default function Profile() {
   const [username, setUsername] = useState("");
   const [grade, setGrade] = useState<Number>(0);
   const [bio, setBio] = useState("");
+  const [profilePicture, setProfilePicture] = useState<File | null>(null);
   const modalRef = useRef<HTMLDialogElement>(null);
   const editModalRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
@@ -144,7 +145,7 @@ export default function Profile() {
                 variant={"destructive"}
                 onClick={() => {
                   axios
-                    .delete(`/api/user/${user?.id}`, {
+                    .delete(`/api/user`, {
                       headers: {
                         Authorization: `Bearer ${getCookie("token")}`,
                       },
@@ -184,6 +185,7 @@ export default function Profile() {
                 formData.append("username", username as string);
                 formData.append("grade", grade as any);
                 formData.append("bio", bio as string);
+                formData.append("profilePicture", profilePicture as File);
 
                 if (
                   username == user?.username &&
@@ -237,6 +239,16 @@ export default function Profile() {
                 className="text-white"
                 min={1}
                 max={12}
+              />
+              <Input
+                type="file"
+                placeholder="Profile Picture"
+                accept="image/*"
+                onChange={(e) => {
+                  if (e.target.files) {
+                    setProfilePicture(e.target.files[0]);
+                  }
+                }}
               />
               <div className="flex items-cemter justify-center gap-[2rem]">
                 <Button

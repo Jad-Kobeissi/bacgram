@@ -10,15 +10,8 @@ export async function POST(req: Request) {
     const formData = await req.formData();
     const username = formData.get("username")?.toString();
     const password = formData.get("password")?.toString();
-    const profilePicture = formData.get("profilePicture") as Blob;
     const grade = parseInt(formData.get("grade")?.toString() as string);
-    if (
-      !username ||
-      !password ||
-      !profilePicture ||
-      !grade ||
-      isEmpty([username, password])
-    )
+    if (!username || !password || !grade || isEmpty([username, password]))
       return new Response("Bad Request", { status: 400 });
 
     const userCheck = await prisma.user.findUnique({
@@ -31,9 +24,8 @@ export async function POST(req: Request) {
       return new Response("Invalid Grade", { status: 400 });
     const storageRef = ref(
       storage,
-      `${process.env.profilePictureBucket}/${username}`
+      `${process.env.profilePictureBucket}/profile.png`
     );
-    await uploadBytes(storageRef, profilePicture);
     const downloadURL = await getDownloadURL(storageRef);
     const user = await prisma.user.create({
       data: {
