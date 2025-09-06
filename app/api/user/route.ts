@@ -81,12 +81,30 @@ export async function PUT(req: Request) {
     }
     let profilePictureUrl = user?.profilePicture;
     if (profilePicture != null) {
-      const profileRef = ref(
-        storage,
-        `${process.env.profilePictureBucket}/${user.username}`
-      );
+      let profileRef;
+      if (
+        await getDownloadURL(
+          ref(
+            storage,
+            `${process.env.profilePictureBucket}/${user?.username}.png`
+          )
+        )
+      ) {
+        profileRef = ref(
+          storage,
+          `${process.env.profilePictureBucket}/${user.username}.png`
+        );
+      } else {
+        profileRef = ref(
+          storage,
+          `${process.env.profilePictureBucket}/profile.png`
+        );
+      }
       uploadBytes(
-        ref(storage, `${process.env.profilePictureBucket}/${user.username}`),
+        ref(
+          storage,
+          `${process.env.profilePictureBucket}/${user.username}.png`
+        ),
         profilePicture
       );
 
