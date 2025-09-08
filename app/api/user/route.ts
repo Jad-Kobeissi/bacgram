@@ -166,7 +166,7 @@ export async function DELETE(req: Request) {
 
     const userRef = ref(
       storage,
-      `${process.env.profilePictureBucket}/${decoded.username}`
+      `${process.env.profilePictureBucket}/${decoded.username}.png`
     );
 
     deleteObject(userRef);
