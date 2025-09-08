@@ -79,7 +79,9 @@ export async function POST(req: Request) {
         storage,
         `${process.env.imageBucket}/${image.name}`
       );
-      await uploadBytes(storageRef, image);
+      await uploadBytes(storageRef, image, {
+        contentType: "image/png",
+      });
       let imageUrl = await getDownloadURL(storageRef);
       post = await prisma.post.create({
         data: {

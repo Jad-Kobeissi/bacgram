@@ -77,30 +77,11 @@ export async function PUT(req: Request) {
       });
 
       if (userCheck) return new Response("Username Taken", { status: 400 });
-
-      const oldRef = ref(
-        storage,
-        `${process.env.profilePictureBucket}/${user.username}.png`
-      );
-      const newRef = ref(
-        storage,
-        `${process.env.profilePictureBucket}/${username}.png`
-      );
-
-      const response = await fetch(await getDownloadURL(oldRef));
-      const blob = await response.blob();
-
-      uploadBytes(newRef, blob);
-
-      deleteObject(oldRef);
     }
     let profilePictureUrl = user?.profilePicture;
     if (profilePicture != null) {
       const newImage = await uploadBytes(
-        ref(
-          storage,
-          `${process.env.profilePictureBucket}/${user.username}.png`
-        ),
+        ref(storage, `${process.env.profilePictureBucket}/${user.id}.png`),
         profilePicture,
         {
           contentType: "image/png",
@@ -166,7 +147,7 @@ export async function DELETE(req: Request) {
 
     const userRef = ref(
       storage,
-      `${process.env.profilePictureBucket}/${decoded.username}.png`
+      `${process.env.profilePictureBucket}/${decoded.id}.png`
     );
 
     deleteObject(userRef);
