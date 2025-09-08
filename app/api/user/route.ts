@@ -82,14 +82,20 @@ export async function PUT(req: Request) {
     let profilePictureUrl = user?.profilePicture;
     if (profilePicture != null) {
       let profileRef;
-      if (
-        await getDownloadURL(
-          ref(
-            storage,
-            `${process.env.profilePictureBucket}/${user?.username}.png`
-          )
+      let existingImage;
+      await getDownloadURL(
+        ref(
+          storage,
+          `${process.env.profilePictureBucket}/${user?.username}.png`
         )
-      ) {
+      )
+        .catch((err) => {
+          existingImage = null;
+        })
+        .then((url) => {
+          existingImage = url;
+        });
+      if (existingImage) {
         profileRef = ref(
           storage,
           `${process.env.profilePictureBucket}/${user.username}.png`

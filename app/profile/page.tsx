@@ -20,6 +20,7 @@ export default function Profile() {
   const [posts, setPosts] = useState<TPost[]>([]);
   const [page, setPage] = useState(1);
   const [error, setError] = useState<string | null>(null);
+  const [editError, setEditError] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const [username, setUsername] = useState("");
   const [grade, setGrade] = useState<Number>(0);
@@ -207,12 +208,12 @@ export default function Profile() {
                     window.location.reload();
                   })
                   .catch((err) => {
-                    setError(err.response.data);
+                    setEditError(err.response.data);
                     console.log(err);
                   });
               }}
             >
-              {error && (
+              {editError && (
                 <Error className="text-center text-red-500">{error}</Error>
               )}
               <Input
