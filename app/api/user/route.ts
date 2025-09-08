@@ -69,8 +69,7 @@ export async function PUT(req: Request) {
     const user = await prisma.user.findUnique({ where: { id: decoded.id } });
 
     if (!user) return new Response("User not found", { status: 404 });
-    console.log(user.username);
-    if (username != null) {
+    if (username != "") {
       const userCheck = await prisma.user.findFirst({
         where: {
           username: username as string,
@@ -78,43 +77,36 @@ export async function PUT(req: Request) {
       });
 
       if (userCheck) return new Response("Username Taken", { status: 400 });
+
+      const oldRef = ref(
+        storage,
+        `${process.env.profilePictureBucket}/${user.username}.png`
+      );
+      const newRef = ref(
+        storage,
+        `${process.env.profilePictureBucket}/${username}.png`
+      );
+
+      const response = await fetch(await getDownloadURL(oldRef));
+      const blob = await response.blob();
+
+      uploadBytes(newRef, blob);
+
+      deleteObject(oldRef);
     }
     let profilePictureUrl = user?.profilePicture;
     if (profilePicture != null) {
-      let profileRef;
-      let existingImage;
-      await getDownloadURL(
-        ref(
-          storage,
-          `${process.env.profilePictureBucket}/${user?.username}.png`
-        )
-      )
-        .catch((err) => {
-          existingImage = null;
-        })
-        .then((url) => {
-          existingImage = url;
-        });
-      if (existingImage) {
-        profileRef = ref(
-          storage,
-          `${process.env.profilePictureBucket}/${user.username}.png`
-        );
-      } else {
-        profileRef = ref(
-          storage,
-          `${process.env.profilePictureBucket}/profile.png`
-        );
-      }
-      uploadBytes(
+      const newImage = await uploadBytes(
         ref(
           storage,
           `${process.env.profilePictureBucket}/${user.username}.png`
         ),
-        profilePicture
+        profilePicture,
+        {
+          contentType: "image/png",
+        }
       );
-
-      profilePictureUrl = await getDownloadURL(profileRef);
+      profilePictureUrl = await getDownloadURL(newImage.ref);
     }
     const newUser = await prisma.user.update({
       where: {
